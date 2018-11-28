@@ -27,6 +27,11 @@ module.exports = class {
         }
       );
     }
+    if (!msg.guild && msg.channel.type == "dm") {
+      bot.logger.log(
+        `${msg.channel.recipient} | ${msg.author.username} -> ${msg.content}`
+      );
+    }
 
     if (msg.author.bot || !msg.guild) return;
     if (!bot.database || !bot.database.ready) return;
