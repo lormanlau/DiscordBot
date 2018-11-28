@@ -20,9 +20,12 @@ module.exports = class {
         .addField("Mod Mail Recieved!", msg.content)
         .setFooter(bot.user.username, `${bot.user.avatarURL()}`)
         .setTimestamp();
-      modmail.send("<@&516544387048669214> <@&516549422549827594>", {
-        embed: f
-      });
+      modmail.send(
+        "<@&516544387048669214> <@&517262424613715980> <@&516549422549827594>",
+        {
+          embed: f
+        }
+      );
     }
 
     if (msg.author.bot || !msg.guild) return;
