@@ -7,7 +7,7 @@ class reply extends Command {
       description: "",
       usage: "reply",
       aliases: [],
-      permLevel: 1
+      permLevel: 6
     });
   }
 
