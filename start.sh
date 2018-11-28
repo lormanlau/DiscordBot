@@ -1,9 +1,9 @@
 #!/bin/bash
-# RoBot Linux Launcher.
+# Linux Launcher.
 # @author lordjbs
 
 user=$USER
-echo "Welcome $user ! Starting RoBot"
+echo "Welcome $user ! Starting Subtle Asian Bot"
 
 node bot.js
 
