@@ -28,6 +28,10 @@ class reply extends Command {
       .setFooter(bot.user.username, `${bot.user.avatarURL()}`)
       .setTimestamp();
     toUser.send(f);
+
+    msg.reply(
+      "your reply has been sent! Content: ```" + args.join(" ") + "```"
+    );
   }
 }
 
