@@ -30,7 +30,11 @@ class reply extends Command {
     toUser.send(f);
 
     msg.reply(
-      "your reply has been sent! Content: ```" + args.join(" ") + "```"
+      "your reply to " +
+        toUser.username +
+        " has been sent! Content: ```" +
+        args.join(" ") +
+        "```"
     );
   }
 }
