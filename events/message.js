@@ -44,6 +44,24 @@ module.exports = class {
       }`
     );
 
+    if (
+      msg.channel.id === "516534356043628544" &&
+      (!msg.attachments.first() || !msg.attachments.first().height)
+    ) {
+      msg.delete();
+      msg
+        .reply(
+          "please keep discussion in the <#516885767520518144> channel! Here's the content of your message to copy over:```" +
+            msg.content +
+            "```\n\n*This message will delete in 5 seconds.*"
+        )
+        .then(m => {
+          setTimeout(() => {
+            m.delete();
+          }, 5000);
+        });
+    }
+
     if (!msg.channel.permissionsFor(msg.guild.me).has("SEND_MESSAGES")) return;
 
     if (msg.guild.me.displayHexColor == "#000000") msg.color = "#FFBB00";
