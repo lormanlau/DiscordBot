@@ -6,6 +6,25 @@ module.exports = class {
   async run(bot, msg) {
     let { MessageEmbed } = require("discord.js");
 
+    if (!msg.guild && msg.author.id != bot.user.id) {
+      msg.reply(
+        "your feedback has been received! The mod team will get back to you as soon as possible."
+      );
+      var modmail = bot.channels.get("516545655674503178");
+      var f = new MessageEmbed()
+        .setColor(0x1675db)
+        .setAuthor(
+          msg.author.username + " (" + msg.author.id + ")",
+          msg.author.avatarURL()
+        )
+        .addField("Mod Mail Recieved!", msg.content)
+        .setFooter(bot.user.username, `${bot.user.avatarURL()}`)
+        .setTimestamp();
+      modmail.send("<@&516544387048669214> <@&516549422549827594>", {
+        embed: f
+      });
+    }
+
     if (msg.author.bot || !msg.guild) return;
     if (!bot.database || !bot.database.ready) return;
 
