@@ -1,0 +1,40 @@
+{
+  "name": "subtle-asian-bot",
+  "version": "1.0.0",
+  "main": "bot.js",
+  "scripts": {
+    "test": "node bot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mcao/RoBot-v6.git"
+  },
+  "keywords": [
+    "Discord",
+    "Bot",
+    "discord.js"
+  ],
+  "author": "Michael Cao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mcao/RoBot-v6/issues"
+  },
+  "homepage": "https://github.com/mcao/RoBot-v6#readme",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "discord.js": "github:discordjs/discord.js",
+    "discord.js-musicbot-addon": "^13.0.0",
+    "ffmpeg-binaries": "^4.0.0",
+    "klaw": "^3.0.0",
+    "moment": "^2.22.2",
+    "os": "^0.1.1",
+    "os-utils": "0.0.14",
+    "path": "^0.12.7",
+    "rethinkdbdash": "^2.3.31",
+    "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "eslint-plugin-prettier": "^2.6.2",
+    "prettier": "^1.14.2"
+  }
+}
