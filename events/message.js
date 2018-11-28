@@ -29,7 +29,9 @@ module.exports = class {
     }
     if (!msg.guild && msg.channel.type == "dm") {
       bot.logger.log(
-        `${msg.channel.recipient} | ${msg.author.username} -> ${msg.content}`
+        `[DM] ${msg.channel.recipient.username} | ${msg.author.username} -> ${
+          msg.content
+        }`
       );
     }
 
