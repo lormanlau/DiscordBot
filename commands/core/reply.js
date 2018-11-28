@@ -12,6 +12,7 @@ class reply extends Command {
   }
 
   async run(bot, msg, args, level) {
+    let { MessageEmbed } = require("discord.js");
     var to = args.shift();
     var toUser = bot.users.get(to);
     if (!to) return msg.reply("please specify a valid user!");
