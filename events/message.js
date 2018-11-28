@@ -53,12 +53,12 @@ module.exports = class {
         .reply(
           "please keep discussion in the <#516885767520518144> channel! Here's the content of your message to copy over:```" +
             msg.content +
-            "```\n\n*This message will delete in 5 seconds.*"
+            "```\n\n*This message will delete in 7 seconds.*"
         )
         .then(m => {
           setTimeout(() => {
             m.delete();
-          }, 5000);
+          }, 7000);
         });
     }
 
