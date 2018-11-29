@@ -15,6 +15,7 @@ class intro extends Command {
     let { MessageEmbed } = require("discord.js");
     if (!msg.mentions.users.first()) {
       let user = await bot.database.users.get(msg.author.id);
+      if (!user) return msg.reply("they do not have an intro yet!");
       let discorduser = msg.author;
       let discordmember = msg.member;
       let intro = user.intro || null;
