@@ -37,7 +37,9 @@ class addintro extends Command {
       .setTimestamp()
       .setFooter(msg.guild.name, msg.guild.iconURL());
 
-    bot.channels.get("516534316138758144").send({ embed: intro });
+    bot.channels
+      .get("516534316138758144")
+      .send("<@" + msg.author.id + ">", { embed: intro });
 
     msg.reply("successfully submitted your intro!");
   }
