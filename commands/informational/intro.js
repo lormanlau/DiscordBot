@@ -4,8 +4,8 @@ class intro extends Command {
   constructor(client) {
     super(client, {
       name: "intro",
-      description: "",
-      usage: "intro",
+      description: "Pull up your own, or someone else's intro!",
+      usage: "intro <optional-mention>",
       aliases: [],
       permLevel: 1
     });

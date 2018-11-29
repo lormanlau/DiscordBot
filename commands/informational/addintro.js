@@ -5,7 +5,7 @@ class addintro extends Command {
     super(client, {
       name: "addintro",
       description: "Add an introduction into the #introductions channel!",
-      usage: "addintro",
+      usage: "addintro <intro-here>",
       aliases: ["addintroduction"],
       permLevel: 1
     });
