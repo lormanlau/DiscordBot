@@ -42,6 +42,7 @@ class intro extends Command {
       }
     } else {
       let user = await bot.database.users.get(msg.mentions.users.first().id);
+      if (!user) msg.reply("they do not have an intro yet!");
       let intro = user.intro || null;
       if (intro) {
         let discorduser = msg.mentions.users.first();
