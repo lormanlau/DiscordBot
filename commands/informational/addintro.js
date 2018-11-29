@@ -26,7 +26,7 @@ class addintro extends Command {
     );
 
     let intro = new MessageEmbed()
-      .setAuthor("Introduction: " + msg.author.username, msg.author.avatarURL())
+      .setAuthor("Introduction: " + msg.author.tag, msg.author.avatarURL())
       .setColor(
         msg.member.displayHexColor == "#000000"
           ? null
