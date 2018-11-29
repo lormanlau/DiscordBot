@@ -15,6 +15,8 @@ class addintro extends Command {
     let introduction = args.join(" ");
     let { MessageEmbed } = require("discord.js");
 
+    if (intro == "") return msg.reply("please include an intro!");
+
     bot.database.update(
       "users",
       { intro: introduction, id: msg.author.id },
