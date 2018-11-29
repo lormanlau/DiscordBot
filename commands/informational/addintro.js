@@ -16,6 +16,8 @@ class addintro extends Command {
     let { MessageEmbed } = require("discord.js");
 
     if (introduction == "") return msg.reply("please include an intro!");
+    if (introduction.length > 1000)
+      return msg.reply("your intro is too long uwu");
 
     bot.database.update(
       "users",
