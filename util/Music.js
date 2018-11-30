@@ -376,11 +376,6 @@ exports.start = (client, options) => {
                   `[${songTitle}](${res.url})`,
                   musicbot.inlineEmbeds
                 );
-                embed.addField(
-                  "Queued On",
-                  res.queuedOn,
-                  musicbot.inlineEmbeds
-                );
                 if (!musicbot.bigPicture)
                   embed.setThumbnail(
                     `https://img.youtube.com/vi/${res.id}/maxresdefault.jpg`
@@ -600,14 +595,30 @@ exports.start = (client, options) => {
       const queue = musicbot.getQueue(msg.guild.id);
       if (!musicbot.canSkip(msg.member, queue)) {
         musicbot.voteskip = musicbot.voteskip + 1;
-        if (!musicbot.voteskip / voiceConnection.channel.members.size > 0.5) {
+        if (
+          musicbot.voteskip / (voiceConnection.channel.members.size - 1) <
+          0.5
+        ) {
           return msg.channel.send(
             musicbot.note(
               "note",
               "**Vote Skip:** " +
                 musicbot.voteskip +
                 "/" +
-                voiceConnection.channel.members.size
+                (voiceConnection.channel.members.size - 1) +
+                " (" +
+                Math.floor((voiceConnection.channel.members.size - 1) / 2) +
+                " needed)"
+            )
+          );
+        } else {
+          msg.channel.send(
+            musicbot.note(
+              "note",
+              "**Vote Skip Succeeded!** " +
+                musicbot.voteskip +
+                "/" +
+                (voiceConnection.channel.members.size - 1)
             )
           );
         }
@@ -743,11 +754,6 @@ exports.start = (client, options) => {
             `[${songTitle}](${queue.last.url})`,
             musicbot.inlineEmbeds
           );
-          embed.addField(
-            "Queued On",
-            queue.last.queuedOn,
-            musicbot.inlineEmbeds
-          );
           if (!musicbot.bigPicture)
             embed.setThumbnail(
               `https://img.youtube.com/vi/${queue.last.id}/maxresdefault.jpg`
@@ -821,7 +827,6 @@ exports.start = (client, options) => {
               .replace(/`/g, "\\`")}](${video.url})`,
             musicbot.inlineEmbeds
           )
-          .addField("Queued On", video.queuedOn, musicbot.inlineEmbeds)
           .addField("Position", video.position + 1, musicbot.inlineEmbeds);
         if (!musicbot.bigPicture)
           embed.setThumbnail(
@@ -1118,11 +1123,6 @@ exports.start = (client, options) => {
                               `[${songTitle}](${videos[song_number].url})`,
                               musicbot.inlineEmbeds
                             );
-                            embed.addField(
-                              "Queued On",
-                              videos[song_number].queuedOn,
-                              musicbot.inlineEmbeds
-                            );
                             if (!musicbot.bigPicture)
                               embed.setThumbnail(
                                 `https://img.youtube.com/vi/${
@@ -1340,11 +1340,6 @@ exports.start = (client, options) => {
                             embed.addField(
                               videos[song_number].channelTitle,
                               `[${songTitle}](${videos[song_number].url})`,
-                              musicbot.inlineEmbeds
-                            );
-                            embed.addField(
-                              "Queued On",
-                              videos[song_number].queuedOn,
                               musicbot.inlineEmbeds
                             );
                             if (!musicbot.bigPicture)
