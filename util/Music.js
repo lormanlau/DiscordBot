@@ -125,7 +125,7 @@ exports.start = (client, options) => {
         if (member.roles.find(r => r.name == this.djRole)) return true;
         if (this.ownerOverMember && member.id === this.botOwner) return true;
         if (this.botAdmins.includes(member.id)) return true;
-        return member.hasPermission("ADMINISTRATOR");
+        return member.hasPermission("MANAGE_MESSAGES");
       }
 
       canSkip(member, queue) {
@@ -598,10 +598,20 @@ exports.start = (client, options) => {
           musicbot.note("fail", "No music being played.")
         );
       const queue = musicbot.getQueue(msg.guild.id);
-      if (!musicbot.canSkip(msg.member, queue))
-        return msg.channel.send(
-          musicbot.note("fail", `You cannot skip this as you didn't queue it.`)
-        );
+      if (!musicbot.canSkip(msg.member, queue)) {
+        musicbot.voteskip = musicbot.voteskip + 1;
+        if (!musicbot.voteskip / voiceConnection.channel.members.size > 0.5) {
+          return msg.channel.send(
+            musicbot.note(
+              "note",
+              "**Vote Skip:** " +
+                musicbot.voteskip +
+                "/" +
+                voiceConnection.channel.members.size
+            )
+          );
+        }
+      }
 
       if (musicbot.queues.get(msg.guild.id).loop == "song")
         return msg.channel.send(
@@ -1662,6 +1672,7 @@ exports.start = (client, options) => {
         }
       })
         .then(connection => {
+          musicbot.voteskip = 0;
           let video;
           if (!queue.last) {
             video = queue.songs[0];
@@ -1731,6 +1742,7 @@ exports.start = (client, options) => {
 
             dispatcher.on("end", () => {
               setTimeout(() => {
+                musicbot.voteskip = 0;
                 let loop = musicbot.queues.get(msg.guild.id).loop;
                 if (queue.songs.length > 0) {
                   if (loop == "none" || loop == null) {
