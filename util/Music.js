@@ -130,6 +130,7 @@ exports.start = (client, options) => {
 
       canSkip(member, queue) {
         if (this.anyoneCanSkip) return true;
+        else if (member.hasPermission("MANAGE_MESSAGES")) return true;
         else if (this.botAdmins.includes(member.id)) return true;
         else if (this.ownerOverMember && member.id === this.botOwner)
           return true;
