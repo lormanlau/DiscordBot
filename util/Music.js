@@ -1711,27 +1711,18 @@ exports.start = (client, options) => {
             );
 
             connection.on("error", error => {
-              console.log(`Dispatcher/connection: ${error}`);
-              if (msg && msg.channel)
-                msg.channel.send(
-                  musicbot.note(
-                    "fail",
-                    `Something went wrong with the connection. Retrying queue...`
-                  )
-                );
-              console.error(error);
+              console.log(`Dispatcher/connection: ${error.stack}`);
+              musicbot.client.users
+                .get("171319044715053057")
+                .send(`Dispatcher/connection: ${error.stack}`);
               musicbot.executeQueue(msg, queue);
             });
 
             dispatcher.on("error", error => {
               console.log(`Dispatcher: ${error.stack}`);
-              if (msg && msg.channel)
-                msg.channel.send(
-                  musicbot.note(
-                    "fail",
-                    `Something went wrong while playing music. Retrying queue...`
-                  )
-                );
+              musicbot.client.users
+                .get("171319044715053057")
+                .send(`Dispatcher: ${error.stack}`);
               console.error(error);
               musicbot.executeQueue(msg, queue);
             });
