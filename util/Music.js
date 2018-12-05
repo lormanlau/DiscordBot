@@ -594,8 +594,12 @@ exports.start = (client, options) => {
           musicbot.note("fail", "No music being played.")
         );
       const queue = musicbot.getQueue(msg.guild.id);
-      if (!musicbot.canSkip(msg.member, queue)) {
+      if (
+        !musicbot.canSkip(msg.member, queue) &&
+        musicbot.voted.indexOf(msg.author.id < 0)
+      ) {
         musicbot.voteskip = musicbot.voteskip + 1;
+        musicbot.voted.push(msg.author.id);
         if (
           musicbot.voteskip / (voiceConnection.channel.members.size - 1) <
           0.5
@@ -623,6 +627,10 @@ exports.start = (client, options) => {
             )
           );
         }
+      } else {
+        msg.channel.send(
+          musicbot.note("note", "You have already voted to skip this song.")
+        );
       }
 
       if (musicbot.queues.get(msg.guild.id).loop == "song")
@@ -1669,6 +1677,7 @@ exports.start = (client, options) => {
       })
         .then(connection => {
           musicbot.voteskip = 0;
+          musicbot.voted = [];
           let video;
           if (!queue.last) {
             video = queue.songs[0];
@@ -1730,6 +1739,7 @@ exports.start = (client, options) => {
             dispatcher.on("end", () => {
               setTimeout(() => {
                 musicbot.voteskip = 0;
+                musicbot.voted = [];
                 let loop = musicbot.queues.get(msg.guild.id).loop;
                 if (queue.songs.length > 0) {
                   if (loop == "none" || loop == null) {
