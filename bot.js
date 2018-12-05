@@ -215,7 +215,7 @@ bot
           });
       }
 
-      bot.birthdays = schedule.scheduleJob("* * 1 * *", birthdays());
+      bot.birthdays = schedule.scheduleJob("* * 0 * *", birthdays());
     }, 1000);
   });
 //  .on("debug", debug => bot.logger.log(debug));

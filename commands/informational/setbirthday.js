@@ -31,14 +31,14 @@ class setbirthday extends Command {
         });
       }
       msg.reply(
-        "Successfully set your birthday to " +
+        "successfully set your birthday to " +
           month +
           "/" +
           day +
           "! You will not be able to change this."
       );
     } else {
-      msg.reply("Invalid Input. Please try again!");
+      msg.reply("invalid Input. Please try again!");
     }
   }
 }
