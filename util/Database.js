@@ -36,6 +36,9 @@ class Database {
         logger.debug("Blacklist Synchronized.");
       }
 
+      this.reactions = this.r.db("asianbot").table("reactions");
+      logger.debug("Reaction Roles Synchronized.");
+
       this.ready = true;
     };
 

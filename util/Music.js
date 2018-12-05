@@ -736,6 +736,8 @@ exports.start = (client, options) => {
       const voiceConnection = client.voiceConnections.find(
         val => val.channel.guild.id == msg.guild.id
       );
+      if (!voiceConnection)
+        return msg.reply("there is no music playing in this server!");
       const queue = musicbot.getQueue(msg.guild.id, true);
       if (voiceConnection === null)
         return msg.channel.send(
