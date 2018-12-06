@@ -129,6 +129,7 @@ exports.start = (client, options) => {
       }
 
       canSkip(member, queue) {
+        if (!queue.last) return false;
         if (this.anyoneCanSkip) return true;
         else if (member.hasPermission("MANAGE_MESSAGES")) return true;
         else if (this.botAdmins.includes(member.id)) return true;
@@ -593,13 +594,15 @@ exports.start = (client, options) => {
         return msg.channel.send(
           musicbot.note("fail", "No music being played.")
         );
-      
+
       if (!voiceConnection.channel.members.get(msg.author.id))
         return msg.channel.send(
           musicbot.note("fail", "You're not in the channel!")
         );
 
       const queue = musicbot.getQueue(msg.guild.id);
+
+      if (!queue.last) return msg.reply("there is no music playing!");
 
       if (
         !musicbot.canSkip(msg.member, queue) &&
@@ -635,7 +638,7 @@ exports.start = (client, options) => {
           );
         }
       } else if (musicbot.voted.indexOf(msg.author.id) > -1) {
-        msg.channel.send(
+        return msg.channel.send(
           musicbot.note("note", "You have already voted to skip this song.")
         );
       }
