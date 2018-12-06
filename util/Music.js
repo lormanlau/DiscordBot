@@ -604,7 +604,7 @@ exports.start = (client, options) => {
           musicbot.voteskip / (voiceConnection.channel.members.size - 1) <
           0.5
         ) {
-          return msg.channel.send(
+          msg.channel.send(
             musicbot.note(
               "note",
               "**Vote Skip:** " +
@@ -627,7 +627,7 @@ exports.start = (client, options) => {
             )
           );
         }
-      } else {
+      } else if (musicbot.voted.indexOf(msg.author.id > 0)) {
         msg.channel.send(
           musicbot.note("note", "You have already voted to skip this song.")
         );
