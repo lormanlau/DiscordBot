@@ -593,10 +593,17 @@ exports.start = (client, options) => {
         return msg.channel.send(
           musicbot.note("fail", "No music being played.")
         );
+      
+      if (!voiceConnection.members.get(msg.author.id))
+        return msg.channel.send(
+          musicbot.note("fail", "You're not in the channel!")
+        );
+
       const queue = musicbot.getQueue(msg.guild.id);
+
       if (
         !musicbot.canSkip(msg.member, queue) &&
-        musicbot.voted.indexOf(msg.author.id < 0)
+        musicbot.voted.indexOf(msg.author.id) < 0
       ) {
         musicbot.voteskip = musicbot.voteskip + 1;
         musicbot.voted.push(msg.author.id);
@@ -604,7 +611,7 @@ exports.start = (client, options) => {
           musicbot.voteskip / (voiceConnection.channel.members.size - 1) <
           0.5
         ) {
-          msg.channel.send(
+          return msg.channel.send(
             musicbot.note(
               "note",
               "**Vote Skip:** " +
@@ -627,7 +634,7 @@ exports.start = (client, options) => {
             )
           );
         }
-      } else if (musicbot.voted.indexOf(msg.author.id > 0)) {
+      } else if (musicbot.voted.indexOf(msg.author.id) > -1) {
         msg.channel.send(
           musicbot.note("note", "You have already voted to skip this song.")
         );
