@@ -4,6 +4,7 @@ module.exports = class {
   }
 
   async run(bot, message, message2) {
+    if (message.author.bot) return;
     if (message.channel.id == "520004899463757826") return;
     if (message.content == message2.content) return;
     let { MessageEmbed } = require("discord.js");

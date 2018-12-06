@@ -4,6 +4,7 @@ module.exports = class {
   }
 
   async run(bot, message) {
+    if (message.author.bot) return;
     let { MessageEmbed } = require("discord.js");
     let deleted = new MessageEmbed()
       .setAuthor(
