@@ -655,6 +655,8 @@ exports.start = (client, options) => {
       if (voiceConnection.paused) dispatcher.end();
       dispatcher.end();
       msg.channel.send(musicbot.note("note", "Skipped song."));
+      musicbot.voted = [];
+      musicbot.voteskip = 0;
     };
 
     musicbot.pauseFunction = (msg, suffix, args) => {
@@ -712,6 +714,8 @@ exports.start = (client, options) => {
 
         if (!voiceConnection.player.dispatcher) return;
         voiceConnection.player.dispatcher.end();
+        musicbot.voted = [];
+        musicbot.voteskip = 0;
         voiceConnection.disconnect();
         msg.channel.send(
           musicbot.note("note", "Successfully left the voice channel.")
@@ -1513,6 +1517,8 @@ exports.start = (client, options) => {
             }
             if (voiceConnection.paused) dispatcher.end();
             dispatcher.end();
+            musicbot.voted = [];
+            musicbot.voteskip = 0;
           }
         })
         .catch(res => {
@@ -1631,6 +1637,8 @@ exports.start = (client, options) => {
     };
 
     musicbot.executeQueue = (msg, queue) => {
+      musicbot.voted = [];
+      musicbot.voteskip = 0;
       if (queue.songs.length <= 0) {
         msg.channel.send(musicbot.note("note", "Playback finished~"));
         musicbot.emptyQueue(msg.guild.id);
