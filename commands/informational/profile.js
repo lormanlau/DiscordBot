@@ -12,61 +12,59 @@ class profile extends Command {
   }
 
   async run(bot, msg, args, level) {
-    let { MessageEmbed } = require("discord.js");
+    let { RichEmbed } = require("discord.js");
+    let user;
+    let discorduser;
+    let discordmember;
     if (!msg.mentions.users.first()) {
-      let user = await bot.database.users.get(msg.author.id);
-      if (!user) return msg.reply("they do not have an intro yet!");
-      let discorduser = msg.author;
-      let discordmember = msg.member;
-      let intro = user.intro || null;
-      if (intro) {
-        let embed = new MessageEmbed()
-          .setAuthor(
-            "Introduction: " + discorduser.tag,
-            discorduser.avatarURL()
-          )
-          .setColor(
-            discordmember.displayHexColor == "#000000"
-              ? null
-              : discordmember.displayHexColor
-          )
-          .setDescription(intro)
-          .setThumbnail(discorduser.avatarURL())
-          .setTimestamp()
-          .setFooter(msg.guild.name, msg.guild.iconURL());
-
-        msg.channel.send("<@" + discorduser + ">'s Intro:", embed);
-      } else {
-        msg.reply(
-          "you do not have an intro yet! Please add one using the `addintro` comnmand."
-        );
-      }
+      user = await bot.database.users.get(msg.author.id);
+      discorduser = msg.author;
+      discordmember = msg.member;
     } else {
-      let user = await bot.database.users.get(msg.mentions.users.first().id);
-      if (!user) return msg.reply("they do not have an intro yet!");
-      let intro = user.intro || null;
-      if (intro) {
-        let discorduser = msg.mentions.users.first();
-        let discordmember = msg.mentions.members.first();
-        let embed = new MessageEmbed()
-          .setAuthor(
-            "Introduction: " + discorduser.tag,
-            discorduser.avatarURL()
-          )
-          .setColor(
-            discordmember.displayHexColor == "#000000"
-              ? null
-              : discordmember.displayHexColor
-          )
-          .setDescription(intro)
-          .setThumbnail(discorduser.avatarURL())
-          .setTimestamp()
-          .setFooter(msg.guild.name, msg.guild.iconURL());
+      user = await bot.database.users.get(msg.mentions.users.first().id);
+      discorduser = msg.mentions.users.first();
+      discordmember = msg.mentions.members.first();
+    }
+    if (!user) return msg.reply("user does not exists");
+    let roles = discordmember.roles
+    let intro = user.intro || null;
+    if (intro) {
+      let embed = new RichEmbed()
+        .setAuthor(
+          "Profile: " + discorduser.tag,
+          discorduser.avatarURL()
+        )
+        .setColor(
+          discordmember.displayHexColor == "#000000"
+            ? null
+            : discordmember.displayHexColor
+        )
+        .setDescription(intro)
+        .addField("Roles: ", roles.Array().join(" "))
+        .addField("Joined: ", discordmember.joinedAt(), true)
+        .setThumbnail(discorduser.avatarURL())
+        .setTimestamp()
+        .setFooter(msg.guild.name, msg.guild.iconURL());
 
-        msg.channel.send("<@" + discorduser + ">'s Intro:", embed);
-      } else {
-        msg.reply("they do not have an intro yet!");
-      }
+      msg.channel.send("<@" + discorduser + ">'s Profile:", embed);
+    } else {
+      let embed = new RichEmbed()
+        .setAuthor(
+          "Profile: " + discorduser.tag,
+          discorduser.avatarURL()
+        )
+        .setColor(
+          discordmember.displayHexColor == "#000000"
+            ? null
+            : discordmember.displayHexColor
+        )
+        .addField("Roles: ", roles.Array().join(" "))
+        .addField("Joined: ", discordmember.joinedAt(), true)
+        .setThumbnail(discorduser.avatarURL())
+        .setTimestamp()
+        .setFooter(msg.guild.name, msg.guild.iconURL());
+
+      msg.channel.send("<@" + discorduser + ">'s Profile:", embed);
     }
   }
 }
