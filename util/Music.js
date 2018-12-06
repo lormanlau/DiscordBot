@@ -594,7 +594,7 @@ exports.start = (client, options) => {
           musicbot.note("fail", "No music being played.")
         );
       
-      if (!voiceConnection.members.get(msg.author.id))
+      if (!voiceConnection.channel.members.get(msg.author.id))
         return msg.channel.send(
           musicbot.note("fail", "You're not in the channel!")
         );
