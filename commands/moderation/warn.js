@@ -99,7 +99,7 @@ class warn extends Command {
       )
       .setTimestamp();
 
-    var log = msg.guild.channels.find(channel => channel.name === "mod-logs");
+    var log = msg.guild.channels.find(channel => channel.name === "mod-log");
     if (log && log.permissionsFor(msg.guild.me).has("EMBED_LINKS"))
       log.send({ embed: warn });
   }
