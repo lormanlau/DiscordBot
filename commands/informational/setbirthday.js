@@ -23,7 +23,7 @@ class setbirthday extends Command {
       if (user) {
         await bot.database.users
           .get(msg.author.id)
-          .update({ birthday: { month: month, day: day } });
+          .update({ birthday: { month: Number(month), day: Number(day) } });
       } else {
         await bot.database.users.insert({
           id: msg.author.id,

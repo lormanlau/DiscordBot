@@ -216,8 +216,6 @@ bot
           });
       }
 
-      birthdays();
-
       bot.birthdays = schedule.scheduleJob("* * 0 * *", birthdays());
     }, 1000);
   });
