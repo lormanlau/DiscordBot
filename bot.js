@@ -187,7 +187,7 @@ bot
       });
 
       function birthdays() {
-        bot.users.get(bot.config.Discord.owner).send("Checking Birthdays");
+        bot.users.get(bot.config.Discord.ownerID).send("Checking Birthdays");
         let d = new Date();
         bot.guilds
           .get("516463112980004875")
