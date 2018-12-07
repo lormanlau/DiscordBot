@@ -92,7 +92,7 @@ class warn extends Command {
           ")"
       )
       .addField("Case", warning.case, true)
-      .addField("Reason", reason || "None")
+      .addField("Reason", reason || "None", true)
       .setFooter(
         `${msg.guild.name} | ${msg.guild.members.size} members`,
         msg.guild.iconURL()
