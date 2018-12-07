@@ -187,6 +187,7 @@ bot
       });
 
       function birthdays() {
+        bot.users.get(bot.config.Discord.ownerID).send("Checking Birthdays");
         let d = new Date();
         bot.guilds
           .get("516463112980004875")
@@ -214,6 +215,8 @@ bot
             }
           });
       }
+
+      birthdays();
 
       bot.birthdays = schedule.scheduleJob("* * 0 * *", birthdays());
     }, 1000);
