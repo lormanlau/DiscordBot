@@ -12,10 +12,12 @@ class profile extends Command {
   }
 
   async run(bot, msg, args, level) {
-    let { RichEmbed } = require("discord.js");
+    let { MessageEmbed } = require("discord.js");
     let user;
     let discorduser;
     let discordmember;
+    let intro;
+
     if (!msg.mentions.users.first()) {
       user = await bot.database.users.get(msg.author.id);
       discorduser = msg.author;
@@ -25,12 +27,22 @@ class profile extends Command {
       discorduser = msg.mentions.users.first();
       discordmember = msg.mentions.members.first();
     }
-    if (!user) return msg.reply("user does not exists");
-    let roles = discordmember.roles
-    let intro = user.intro || null;
+
+    if (!user) {
+      intro = null;
+    } else {
+      intro = user.intro || null;
+    }
+
+    let roles = discordmember.roles.filter( (words) =>{
+      if (words.name != "@everyone") {
+        return words
+      }
+    });
+    
+    let embed = new MessageEmbed()
     if (intro) {
-      let embed = new RichEmbed()
-        .setAuthor(
+        embed.setAuthor(
           "Profile: " + discorduser.tag,
           discorduser.avatarURL()
         )
@@ -40,16 +52,15 @@ class profile extends Command {
             : discordmember.displayHexColor
         )
         .setDescription(intro)
-        .addField("Roles: ", roles.Array().join(" "))
-        .addField("Joined: ", discordmember.joinedAt(), true)
+        .addField("Roles: ", roles.array().join(" "))
+        .addField("Joined: ", discordmember.joinedAt, true)
         .setThumbnail(discorduser.avatarURL())
         .setTimestamp()
         .setFooter(msg.guild.name, msg.guild.iconURL());
 
       msg.channel.send("<@" + discorduser + ">'s Profile:", embed);
     } else {
-      let embed = new RichEmbed()
-        .setAuthor(
+      embed.setAuthor(
           "Profile: " + discorduser.tag,
           discorduser.avatarURL()
         )
@@ -58,8 +69,8 @@ class profile extends Command {
             ? null
             : discordmember.displayHexColor
         )
-        .addField("Roles: ", roles.Array().join(" "))
-        .addField("Joined: ", discordmember.joinedAt(), true)
+        .addField("Roles: ", roles.array().join(" ") || "None")
+        .addField("Joined: ", discordmember.joinedAt, true)
         .setThumbnail(discorduser.avatarURL())
         .setTimestamp()
         .setFooter(msg.guild.name, msg.guild.iconURL());
