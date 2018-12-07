@@ -142,6 +142,7 @@ exports.start = (client, options) => {
 
       canAdjust(member, queue) {
         if (this.anyoneCanAdjust) return true;
+        else if (member.hasPermission("MANAGE_MESSAGES")) return true;
         else if (this.botAdmins.includes(member.id)) return true;
         else if (this.ownerOverMember && member.id === this.botOwner)
           return true;
@@ -622,7 +623,7 @@ exports.start = (client, options) => {
                 "/" +
                 (voiceConnection.channel.members.size - 1) +
                 " (" +
-                Math.floor((voiceConnection.channel.members.size - 1) / 2) +
+                Math.ceil((voiceConnection.channel.members.size - 1) / 2) +
                 " needed)"
             )
           );
