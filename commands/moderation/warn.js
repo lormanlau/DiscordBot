@@ -42,6 +42,7 @@ class warn extends Command {
     if (!user || !user.warnings) {
       warning = {
         case: 1,
+        moderator: msg.member.displayName,
         reason: reason == "" ? "None" : reason,
         timestamp: new Date()
       };
@@ -54,6 +55,7 @@ class warn extends Command {
       let current_warns = user.warnings;
       warning = {
         case: user.warnings.length + 1,
+        moderator: msg.member.displayName,
         reason: reason == "" ? "None" : reason,
         time: new Date()
       };
