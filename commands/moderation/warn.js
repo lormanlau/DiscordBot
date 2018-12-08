@@ -57,7 +57,7 @@ class warn extends Command {
         case: user.warnings.length + 1,
         moderator: msg.member.displayName,
         reason: reason == "" ? "None" : reason,
-        time: new Date()
+        timestamp: new Date()
       };
       current_warns.push(warning);
       bot.database.update(
