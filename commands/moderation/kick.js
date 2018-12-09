@@ -22,6 +22,11 @@ class kick extends Command {
       return msg.reply("please mention someone to kick!");
     if (!msg.mentions.members.first().kickable)
       return msg.reply("I don't have permission to kick this user!");
+    if (
+      msg.mentions.members.first().roles.highest.position >=
+      msg.member.roles.highest.position
+    )
+      return msg.reply("You cannot kick this user!");
 
     args.shift();
     msg.mentions.members

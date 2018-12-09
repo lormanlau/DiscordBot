@@ -25,11 +25,7 @@ class unmute extends Command {
         return msg.channel.send("I can't unmute " + user + "!");
       }
 
-      msg.guild.channels.forEach(channel => {
-        if (channel.type == "text") {
-          channel.updateOverwrite(member, { SEND_MESSAGES: null });
-        }
-      });
+      await member.roles.remove("516758098556354585");
 
       msg.reply("<@" + member + "> has been unmuted.");
 

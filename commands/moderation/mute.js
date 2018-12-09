@@ -33,11 +33,7 @@ class mute extends Command {
         return msg.channel.send("I can't mute " + user + "!");
       }
 
-      msg.guild.channels.forEach(channel => {
-        if (channel.type == "text") {
-          channel.updateOverwrite(member, { SEND_MESSAGES: false });
-        }
-      });
+      await member.roles.add("516758098556354585");
 
       msg.reply("<@" + member + "> has been muted.");
 

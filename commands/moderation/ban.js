@@ -21,6 +21,11 @@ class ban extends Command {
       return msg.reply("please mention someone to ban!");
     if (!msg.mentions.members.first().bannable)
       return msg.reply("I don't have permission to ban this user!");
+    if (
+      msg.mentions.members.first().roles.highest.position >=
+      msg.member.roles.highest.position
+    )
+      return msg.reply("You cannot ban this user!");
 
     args.shift();
 
