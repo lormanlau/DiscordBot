@@ -67,7 +67,7 @@ class kick extends Command {
       )
       .setTimestamp();
 
-    var log = msg.guild.channels.find(channel => channel.name === "mod-logs");
+    var log = msg.guild.channels.get("517258075636367362");
     if (log && log.permissionsFor(msg.guild.me).has("EMBED_LINKS"))
       log.send({ embed: kick });
     else if (msg.channel.permissionsFor(msg.guild.me).has("EMBED_LINKS"))

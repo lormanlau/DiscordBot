@@ -41,10 +41,7 @@ class unmute extends Command {
         .setFooter(`${guild.name}`, `${guild.iconURL()}`)
         .setTimestamp();
       try {
-        var log =
-          msg.guild.channels.find("name", "mod-logs") ||
-          msg.guild.channels.find("name", "modlogs");
-        log.send({ embed: mute });
+        msg.guild.channels.get("517258075636367362").send({ embed: mute });
       } catch (e) {
         msg.channel.send({ embed: mute });
       }
