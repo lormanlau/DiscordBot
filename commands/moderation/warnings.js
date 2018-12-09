@@ -47,7 +47,7 @@ class warnings extends Command {
     for (var i = 0; i < current_warns.length; i++){
       let warning = current_warns[i];
       warn.addField(
-        `Case: ${warning.case} | Issued By: ${warning.moderator}`,
+        `Case: ${warning.case} | Issued By: ${bot.users.get(warning.moderator).username}`,
         `Reason: ${warning.reason} | Issued At: ${warning.timestamp.toLocaleString('en-US')}`
         );
     }
