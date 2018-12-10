@@ -1,4 +1,5 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
+const { MessageEmbed } = require("discord.js");
 
 class addreaction extends Command {
   constructor(client) {
@@ -19,9 +20,9 @@ class addreaction extends Command {
     if (msgBind.reactions.size == 20)
       return msg.reply("there are already 20 reactions on this message!");
 
-    let mid = msgBind.id;
+    let msg_id = msgBind.id;
 
-    await m.edit(
+    let m = await msg.channel.send(
       "Please send the role you would like to be given upon reaction."
     );
 
@@ -38,35 +39,45 @@ class addreaction extends Command {
           role => role.name.toLowerCase() == message.content.toLowerCase()
         ).editable
       ) {
-        let res = bot.database.reactions.get(msgBind.id);
-        if (res) {
-          for (var i = 0; i < res.reactions.length; i++) {
-            var role = await msg.guild.roles.get(res.reactions[i].role);
-            if (role.name.toLowerCase() == message.content.toLowerCase()) {
-              return msg.reply(
-                "this role has already been assigned an emoji reaction!"
-              );
+        let res = bot.database.reactions.get(msg.guild.id);
+        if (res && res != {}) {
+          for (var chanid in res) {
+            for (var msgid in res[chanid]) {
+              let messagedata = res[chanid][msgid];
+              if (messagedata) {
+                for (var i = 0; i < messagedata.length; i++) {
+                  if (
+                    messagedata[i] &&
+                    messagedata[i].role &&
+                    messagedata[i].role ==
+                      msg.guild.roles.find(
+                        role =>
+                          role.name.toLowerCase() ==
+                          message.content.toLowerCase()
+                      ).id
+                  )
+                    return msg.reply(
+                      "this role has already been assigned to a reaction in this server!"
+                    );
+                }
+              }
             }
           }
         }
 
-        let rid = msg.guild.roles.find(
+        let role_id = msg.guild.roles.find(
           role => role.name.toLowerCase() == message.content.toLowerCase()
         ).id;
 
         /*
-        
-        obj = {
-          id: "msgid",
-          channel: "chanid",
-          reactions: [
-            {
-              role: "0000",
-              emoji: "0000"
-            }
-          ]
-        };
-        
+          "guild id": {
+              "channel id": {
+                  "message id": [{
+                          role: "0000",
+                          emoji: "0000"
+                  }]
+              }
+          }
         */
 
         await m.edit(
@@ -78,9 +89,37 @@ class addreaction extends Command {
           { max: 1 }
         );
         collector2.on("collect", (r, user) => {
-          let ename = r.emoji.id ? r.emoji.id : r.emoji.name;
-          msg.channel.send(ename);
-          m.react(ename);
+          let emoji_id = r.emoji.id ? r.emoji.id : r.emoji.name;
+          msgBind.react(emoji_id);
+
+          let res = bot.database.reactions.get(msg.guild.id);
+          if (res && res != {}) {
+            for (var chanid in res) {
+              if (res[chanid]) {
+                let messagedata = res[chanid][msg_id];
+                if (messagedata) {
+                  for (var i = 0; i < messagedata.length; i++) {
+                    if (messagedata[i].emoji == emoji_id)
+                      return msg.reply(
+                        "this emoji has already been assigned to a role in this message!"
+                      );
+                  }
+                }
+              }
+            }
+          }
+
+          let response = new MessageEmbed()
+            .setTitle("Role Reaction Set!")
+            .addField("Message ID", msg_id, true)
+            .addField("Role Attached", msg.guild.roles.get(role_id).name, true)
+            .addField("Emoji Attached", r.emoji)
+            .setColor(
+              msg.guild.me.displayHexColor == "#000000"
+                ? "#00FF00"
+                : msg.guild.me.displayHexColor
+            );
+          msg.channel.send({ embed: response });
         });
       }
     });
