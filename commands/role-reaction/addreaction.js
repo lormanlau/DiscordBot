@@ -39,7 +39,7 @@ class addreaction extends Command {
           role => role.name.toLowerCase() == message.content.toLowerCase()
         ).editable
       ) {
-        let res = bot.database.reactions.get(msg.guild.id);
+        let res = await bot.database.reactions.get(msg.guild.id);
         if (res && res != {}) {
           for (var chanid in res) {
             for (var msgid in res[chanid]) {
@@ -69,17 +69,6 @@ class addreaction extends Command {
           role => role.name.toLowerCase() == message.content.toLowerCase()
         ).id;
 
-        /*
-          "guild id": {
-              "channel id": {
-                  "message id": [{
-                          role: "0000",
-                          emoji: "0000"
-                  }]
-              }
-          }
-        */
-
         await m.edit(
           "Please react to this message with the emoji you would like to bind to this role. Must be one in this server, or a default emoji."
         );
@@ -88,11 +77,11 @@ class addreaction extends Command {
           (reaction, user) => msg.author.id == user.id,
           { max: 1 }
         );
-        collector2.on("collect", (r, user) => {
+        collector2.on("collect", async (r, user) => {
           let emoji_id = r.emoji.id ? r.emoji.id : r.emoji.name;
           msgBind.react(emoji_id);
 
-          let res = bot.database.reactions.get(msg.guild.id);
+          res = await bot.database.reactions.get(msg.guild.id);
           if (res && res != {}) {
             for (var chanid in res) {
               if (res[chanid]) {
@@ -108,6 +97,52 @@ class addreaction extends Command {
               }
             }
           }
+
+          /*
+            "guild id": {
+                "channel id": {
+                    "message id": [{
+                            role: "0000",
+                            emoji: "0000"
+                    }]
+                }
+            }
+          */
+          let stuff = res ? res[msg.channel.id] : null;
+
+          if (stuff) {
+            if (stuff[msg.id]) {
+              stuff[msg.id].push({
+                role: role_id,
+                emoji: emoji_id
+              });
+            } else {
+              stuff[msg.id] = [
+                {
+                  role: role_id,
+                  emoji: emoji_id
+                }
+              ];
+            }
+          } else {
+            stuff = {
+              [msg_id]: [
+                {
+                  role: role_id,
+                  emoji: emoji_id
+                }
+              ]
+            };
+          }
+
+          await bot.database.update(
+            "reactions",
+            {
+              id: msg.guild.id,
+              [msg.channel.id]: stuff
+            },
+            bot.logger
+          );
 
           let response = new MessageEmbed()
             .setTitle("Role Reaction Set!")
