@@ -7,7 +7,7 @@ class clearwarnings extends Command {
       description: "Clear a user's warnings!",
       usage: "clearwarnings",
       aliases: ["clw"],
-      permLevel: 1
+      permLevel: 2
     });
   }
 
