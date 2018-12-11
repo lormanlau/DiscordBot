@@ -69,7 +69,7 @@ class warn extends Command {
     msg.channel.send(
       "**" +
         discorduser.username +
-        "** has warned for **" +
+        "** has been warned for **" +
         warning.reason +
         "**. Warning #" +
         warning.case

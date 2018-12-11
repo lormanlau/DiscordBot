@@ -48,7 +48,7 @@ class karaoke extends Command {
       )
         return msg.reply("you aren't in the Karaoke voice channel!");
 
-      bot.karaokeQueue.push("<@" + msg.author.id + ">");
+      bot.karaokeQueue.push(msg.author.id);
       msg.reply(
         "you've been added to the queue at position " +
           bot.karaokeQueue.length +
@@ -69,20 +69,19 @@ class karaoke extends Command {
       let channel = msg.guild.channels.get("517095011225960458");
       bot.karaokePerformer = bot.karaokeQueue.shift();
       channel.members.forEach(async mem => {
-        if (
-          "<@" + mem.user.id + ">" == bot.karaokePerformer ||
-          mem == bot.karaokeHost
-        ) {
-          await mem.setMute(false);
+        if (mem.user.id == bot.karaokePerformer || mem == bot.karaokeHost) {
+          mem.setMute(false);
         } else {
-          await mem.setMute(true);
+          mem.setMute(true);
         }
       });
 
       bot.channels
         .get("518940742194954291")
         .send(
-          "🎉🎉🎉 LET THE PARTY BEGIN! First up: " + bot.karaokePerformer + "!",
+          "🎉🎉🎉 LET THE PARTY BEGIN! First up: <@" +
+            bot.karaokePerformer +
+            ">!",
           {
             embed: {
               title: "Karaoke Queue",
@@ -108,10 +107,7 @@ class karaoke extends Command {
       bot.lastPerformer = bot.karaokePerformer;
       bot.karaokePerformer = bot.karaokeQueue.shift();
       channel.members.forEach(async mem => {
-        if (
-          "<@" + mem.user.id + ">" == bot.karaokePerformer ||
-          mem == bot.karaokeHost
-        ) {
+        if (mem.user.id == bot.karaokePerformer || mem == bot.karaokeHost) {
           await mem.setMute(false);
         } else {
           await mem.setMute(true);
@@ -123,9 +119,9 @@ class karaoke extends Command {
         .send(
           "Thanks for an amazing performance, " +
             bot.lastPerformer +
-            "! Next up: " +
+            "! Next up: <@" +
             bot.karaokePerformer +
-            "!",
+            ">!",
           {
             embed: {
               title: "Karaoke Queue",
@@ -141,8 +137,8 @@ class karaoke extends Command {
           "Thanks for coming out to another great karaoke event! This one is now over, see you next time!"
         );
       let channel = msg.guild.channels.get("517095011225960458");
-      channel.members.forEach(async mem => {
-        await mem.setMute(false);
+      channel.members.forEach(mem => {
+        mem.setMute(false);
       });
       bot.karaokeInProgress = null;
       bot.karaokeIsOpen = null;
@@ -152,10 +148,14 @@ class karaoke extends Command {
     } else if (option == "queue") {
       if (!bot.karaokeInProgress)
         return msg.reply("there's no karaoke in progress right now :(");
+      let list = "";
+      for (var i = 0; i < bot.karaokeQueue.length; i++) {
+        list += "<@" + bot.karaokeQueue[i] + ">\n";
+      }
       bot.channels.get("518940742194954291").send({
         embed: {
           title: "Karaoke Queue",
-          description: "**Up Next:** " + bot.karaokeQueue.join("\n"),
+          description: "**Up Next:** " + list,
           color: msg.guild.me.displayColor
         }
       });
