@@ -83,7 +83,7 @@ class slots extends Command {
             amountWon = amount * 10;
           } else if (one == two || one == three || two == three) {
             result = "You won " + 4 * amount + " credits!";
-            amountWon = amount & 4;
+            amountWon = amount * 4;
           } else if (
             ((one == "🍎" || two == "🍎" || three == "🍎") &&
               (one == "🍓" || two == "🍓" || three == "🍓")) ||
