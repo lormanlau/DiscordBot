@@ -115,26 +115,28 @@ class slots extends Command {
             amountWon = 0;
           }
 
-          slotsMsg.edit({
-            embed: {
-              title: "**:slot_machine: Bid Amount:** " + amount + " credits",
-              description: "؜\n" + one + two + three + "\n\n" + result,
-              footer: {
-                text: bot.user.username + " Slots",
-                iconURL: bot.user.avatarURL()
-              },
-              timestamp: new Date()
-            }
-          });
-
-          bot.database.update(
-            "users",
-            {
-              balance: account.balance - amount + amountWon,
-              id: msg.author.id
-            },
-            bot.logger
-          );
+          slotsMsg
+            .edit({
+              embed: {
+                title: "**:slot_machine: Bid Amount:** " + amount + " credits",
+                description: "؜\n" + one + two + three + "\n\n" + result,
+                footer: {
+                  text: bot.user.username + " Slots",
+                  iconURL: bot.user.avatarURL()
+                },
+                timestamp: new Date()
+              }
+            })
+            .then(m => {
+              bot.database.update(
+                "users",
+                {
+                  balance: account.balance - amount + amountWon,
+                  id: msg.author.id
+                },
+                bot.logger
+              );
+            });
         }, (i + 1) * 1500);
       }
     }
