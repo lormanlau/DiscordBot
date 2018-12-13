@@ -66,7 +66,7 @@ class pay extends Command {
       bot.database.update(
         "users",
         {
-          balance: recipient.balance - amount,
+          balance: account.balance - amount,
           id: msg.author.id
         },
         bot.logger
