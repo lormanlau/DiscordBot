@@ -92,13 +92,12 @@ Message me if you have any problems with someone or just need to talk (vent)
 
 <@163796113168531457>: I’m wuyang, I’m from the Texas DFW area. I enjoy reading, recording music, and checking out new games on steam. I’m currently working in enterprise technology sales. My bias is Jisoo Kim.
 
-<@156224972291964931> : oi c: i’m just your regular texan that is also the aussie’s mum uwu
-
 <@208000915712638978> : hi im trap
 
 *Retired Moderators (RIP):*
 
 - Michelle
+- Goorace
 ~~
 ~~`);
 

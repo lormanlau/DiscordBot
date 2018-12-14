@@ -17,7 +17,19 @@ class slots extends Command {
     else if (args[0] && !isNaN(args[0])) amount = Number(args[0]);
     else amount = 10;
 
-    const combos = ["🍎", "🍐", "🍑", "🍌", "🍉", "🍇", "🍓", "🍒", "🍊", "🍍"];
+    const combos = [
+      "🍎",
+      "🍐",
+      "🍑",
+      "🍌",
+      "🍉",
+      "🍇",
+      "🍓",
+      "🍒",
+      "🍊",
+      "🍍",
+      "🎰"
+    ];
     var slotsMsg;
 
     let account = (await bot.database.users.get(msg.author.id)) || {};
@@ -77,13 +89,16 @@ class slots extends Command {
       if (i == times - 1) {
         setTimeout(async () => {
           var result;
-          if (one == two && two == three) {
+          if (one == "🎰" && two == "🎰" && three == "🎰") {
             result =
-              "**JACKPOT!** You won " + 10 * amount + " credits! **JACKPOT!**";
-            amountWon = amount * 10;
+              "**JACKPOT!** You won " + 5 * amount + " credits! **JACKPOT!**";
+            amountWon = amount * 5;
+          } else if (one == two && one == three) {
+            result = "You won " + 3 * amount + " credits!";
+            amountWon = amount * 3;
           } else if (one == two || one == three || two == three) {
-            result = "You won " + 4 * amount + " credits!";
-            amountWon = amount & 4;
+            result = "You won " + 2 * amount + " credits!";
+            amountWon = amount * 2;
           } else if (
             ((one == "🍎" || two == "🍎" || three == "🍎") &&
               (one == "🍓" || two == "🍓" || three == "🍓")) ||
@@ -98,43 +113,35 @@ class slots extends Command {
             ((one == "🍉" || two == "🍉" || three == "🍉") &&
               (one == "🍓" || two == "🍓" || three == "🍓"))
           ) {
-            result = "You won " + 2 * amount + " credits!";
-            amountWon = amount * 2;
-          } else if (
-            ((one == "🍑" || two == "🍑" || three == "🍑") &&
-              (one == "🍊" || two == "🍊" || three == "🍊")) ||
-            ((one == "🍍" || two == "🍍" || three == "🍍") &&
-              (one == "🍊" || two == "🍊" || three == "🍊")) ||
-            ((one == "🍑" || two == "🍑" || three == "🍑") &&
-              (one == "🍍" || two == "🍍" || three == "🍍"))
-          ) {
-            result = "You won " + 3 * amount + " credits!";
-            amountWon = amount * 3;
+            result = "You did not gain or lose credits!";
+            amountWon = amount;
           } else {
             result = "You lost all " + amount + " credits :(";
             amountWon = 0;
           }
 
-          slotsMsg.edit({
-            embed: {
-              title: "**:slot_machine: Bid Amount:** " + amount + " credits",
-              description: "؜\n" + one + two + three + "\n\n" + result,
-              footer: {
-                text: bot.user.username + " Slots",
-                iconURL: bot.user.avatarURL()
-              },
-              timestamp: new Date()
-            }
-          });
-
-          bot.database.update(
-            "users",
-            {
-              balance: account.balance - amount + amountWon,
-              id: msg.author.id
-            },
-            bot.logger
-          );
+          slotsMsg
+            .edit({
+              embed: {
+                title: "**:slot_machine: Bid Amount:** " + amount + " credits",
+                description: "؜\n" + one + two + three + "\n\n" + result,
+                footer: {
+                  text: bot.user.username + " Slots",
+                  iconURL: bot.user.avatarURL()
+                },
+                timestamp: new Date()
+              }
+            })
+            .then(m => {
+              bot.database.update(
+                "users",
+                {
+                  balance: account.balance - amount + amountWon,
+                  id: msg.author.id
+                },
+                bot.logger
+              );
+            });
         }, (i + 1) * 1500);
       }
     }
