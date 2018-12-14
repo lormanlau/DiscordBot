@@ -4,8 +4,8 @@ class pay extends Command {
   constructor(client) {
     super(client, {
       name: "pay",
-      description: "",
-      usage: "pay",
+      description: "Pay someone else credits from your balance!",
+      usage: "pay <user> <amount>",
       aliases: [],
       permLevel: 1
     });
