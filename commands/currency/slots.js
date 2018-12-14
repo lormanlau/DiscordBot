@@ -100,16 +100,6 @@ class slots extends Command {
           ) {
             result = "You did not gain or lose credits!";
             amountWon = amount;
-          } else if (
-            ((one == "🍑" || two == "🍑" || three == "🍑") &&
-              (one == "🍊" || two == "🍊" || three == "🍊")) ||
-            ((one == "🍍" || two == "🍍" || three == "🍍") &&
-              (one == "🍊" || two == "🍊" || three == "🍊")) ||
-            ((one == "🍑" || two == "🍑" || three == "🍑") &&
-              (one == "🍍" || two == "🍍" || three == "🍍"))
-          ) {
-            result = "You did not gain or lose credits!";
-            amountWon = amount;
           } else {
             result = "You lost all " + amount + " credits :(";
             amountWon = 0;
