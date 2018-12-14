@@ -48,7 +48,7 @@ class blackjack extends Command {
       if (total > 21) {
         total -= 10;
       } else {
-        return
+        return total;
       }
     }
 
