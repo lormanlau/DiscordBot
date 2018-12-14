@@ -79,11 +79,11 @@ class slots extends Command {
           var result;
           if (one == two && two == three) {
             result =
-              "**JACKPOT!** You won " + 10 * amount + " credits! **JACKPOT!**";
-            amountWon = amount * 10;
+              "**JACKPOT!** You won " + 3 * amount + " credits! **JACKPOT!**";
+            amountWon = amount * 3;
           } else if (one == two || one == three || two == three) {
-            result = "You won " + 4 * amount + " credits!";
-            amountWon = amount * 4;
+            result = "You won " + 2 * amount + " credits!";
+            amountWon = amount * 2;
           } else if (
             ((one == "🍎" || two == "🍎" || three == "🍎") &&
               (one == "🍓" || two == "🍓" || three == "🍓")) ||
@@ -98,8 +98,8 @@ class slots extends Command {
             ((one == "🍉" || two == "🍉" || three == "🍉") &&
               (one == "🍓" || two == "🍓" || three == "🍓"))
           ) {
-            result = "You won " + 2 * amount + " credits!";
-            amountWon = amount * 2;
+            result = "You did not gain or lose credits!";
+            amountWon = amount;
           } else if (
             ((one == "🍑" || two == "🍑" || three == "🍑") &&
               (one == "🍊" || two == "🍊" || three == "🍊")) ||
@@ -108,8 +108,8 @@ class slots extends Command {
             ((one == "🍑" || two == "🍑" || three == "🍑") &&
               (one == "🍍" || two == "🍍" || three == "🍍"))
           ) {
-            result = "You won " + 3 * amount + " credits!";
-            amountWon = amount * 3;
+            result = "You did not gain or lose credits!";
+            amountWon = amount;
           } else {
             result = "You lost all " + amount + " credits :(";
             amountWon = 0;
