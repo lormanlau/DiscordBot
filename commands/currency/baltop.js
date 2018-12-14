@@ -17,12 +17,18 @@ class baltop extends Command {
       .orderBy(bot.database.r.desc("balance"))
       .limit(18);
     let lb = new MessageEmbed()
-      .setTitle(msg.guild.name + " Balance Leaderboard")
+      .setTitle(bot.user.username + " Balance Leaderboard")
       .setColor(msg.guild.me.displayHexColor)
       .setFooter(msg.guild.name, msg.guild.iconURL());
 
     topTwenty.forEach(user => {
-      lb.addField(bot.users.get(user.id).username, user.balance, true);
+      lb.addField(
+        bot.users.get(user.id)
+          ? bot.users.get(user.id).username
+          : "Uncached User",
+        user.balance,
+        true
+      );
     });
 
     msg.channel.send({ embed: lb });

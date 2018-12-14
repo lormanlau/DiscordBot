@@ -113,6 +113,16 @@ class slots extends Command {
             ((one == "🍉" || two == "🍉" || three == "🍉") &&
               (one == "🍓" || two == "🍓" || three == "🍓"))
           ) {
+            result = "You won " + 1.5 * amount + " credits!";
+            amountWon = amount;
+          } else if (
+            ((one == "🍑" || two == "🍑" || three == "🍑") &&
+              (one == "🍊" || two == "🍊" || three == "🍊")) ||
+            ((one == "🍍" || two == "🍍" || three == "🍍") &&
+              (one == "🍊" || two == "🍊" || three == "🍊")) ||
+            ((one == "🍑" || two == "🍑" || three == "🍑") &&
+              (one == "🍍" || two == "🍍" || three == "🍍"))
+          ) {
             result = "You did not gain or lose credits!";
             amountWon = amount;
           } else {
