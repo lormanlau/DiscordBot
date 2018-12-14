@@ -44,7 +44,7 @@ class blackjack extends Command {
       }
     }
     
-    for (var i = 0; i < countAces; i++){
+    for (var i = 0; i < countAces(hand); i++){
       if (total > 21) {
         total -= 10;
       } else {
@@ -61,7 +61,10 @@ class blackjack extends Command {
       cpus_hand.push(this.drawCard(cards));
     }
     let cpus_total = this.calculateTotal(cpus_hand);
-    if (cpus_total > 21 || cpus_total < players_total) {
+    if (cpus_total > 21 || cpus_total <= players_total) {
+      if (cpus_total == players_total && players_hand.length > cpus_hand.length) {
+        return false
+      }
       return true;
     } else {
       return false;
