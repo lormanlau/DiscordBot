@@ -17,7 +17,19 @@ class slots extends Command {
     else if (args[0] && !isNaN(args[0])) amount = Number(args[0]);
     else amount = 10;
 
-    const combos = ["🍎", "🍐", "🍑", "🍌", "🍉", "🍇", "🍓", "🍒", "🍊", "🍍"];
+    const combos = [
+      "🍎",
+      "🍐",
+      "🍑",
+      "🍌",
+      "🍉",
+      "🍇",
+      "🍓",
+      "🍒",
+      "🍊",
+      "🍍",
+      "🎰"
+    ];
     var slotsMsg;
 
     let account = (await bot.database.users.get(msg.author.id)) || {};
@@ -77,9 +89,12 @@ class slots extends Command {
       if (i == times - 1) {
         setTimeout(async () => {
           var result;
-          if (one == two && two == three) {
+          if (one == "🎰" && two == "🎰" && three == "🎰") {
             result =
-              "**JACKPOT!** You won " + 3 * amount + " credits! **JACKPOT!**";
+              "**JACKPOT!** You won " + 5 * amount + " credits! **JACKPOT!**";
+            amountWon = amount * 5;
+          } else if (one == two && one == three) {
+            result = "You won " + 3 * amount + " credits!";
             amountWon = amount * 3;
           } else if (one == two || one == three || two == three) {
             result = "You won " + 2 * amount + " credits!";
