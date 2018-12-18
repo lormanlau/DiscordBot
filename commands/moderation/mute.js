@@ -44,7 +44,15 @@ class mute extends Command {
           "Member Muted",
           `**${user.username}#${user.discriminator} (${user.id}) was muted.**`
         )
-        .addField("Responsible Moderator", msg.member.displayName)
+        .addField(
+          "Responsible Moderator",
+          msg.member.displayName +
+            " (" +
+            msg.author.tag +
+            " | " +
+            msg.author.id +
+            ")"
+        )
         .addField("Reason", reason || "Not Specified")
         .setFooter(`${guild.name}`, `${guild.iconURL()}`)
         .setTimestamp();

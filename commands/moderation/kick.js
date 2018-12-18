@@ -29,9 +29,7 @@ class kick extends Command {
       return msg.reply("You cannot kick this user!");
 
     args.shift();
-    msg.mentions.members
-      .first()
-      .kick({ reason: args.join(" ") || "None Specified" });
+    await msg.mentions.members.first().kick({ reason: args.join(" ") });
 
     msg.reply(
       "**" +

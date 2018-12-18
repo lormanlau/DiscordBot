@@ -20,6 +20,8 @@ class pay extends Command {
       return msg.reply("please specify an amount to pay!");
     else if (args[1] && !isNaN(args[1])) amount = Number(args[1]);
 
+    if (amount >= 0) return msg.reply("you cannot pay a negative amount!");
+
     if (bot.config.Discord.ownerID == msg.author.id) {
       msg.channel.send(
         "**[ADMIN OVERRIDE]** Added " +
