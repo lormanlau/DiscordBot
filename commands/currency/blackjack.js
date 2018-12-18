@@ -48,21 +48,20 @@ class blackjack extends Command {
       if (total > 21) {
         total -= 10;
       } else {
-        return
+        break;
       }
     }
-
     return total;
   }
 
   beepboop(players_hand, cpus_hand, cards){
     let players_total = this.calculateTotal(players_hand);
-    while (this.calculateTotal(cpus_hand) < players_total && this.calculateTotal(cpus_hand) <= 21) {
+    while (this.calculateTotal(cpus_hand) <= players_total && this.calculateTotal(cpus_hand) <= 21) {
       cpus_hand.push(this.drawCard(cards));
     }
     let cpus_total = this.calculateTotal(cpus_hand);
     if (cpus_total > 21 || cpus_total <= players_total) {
-      if (players_hand.length > cpus_hand.length) {
+      if (cpus_total == players_total && players_hand.length > cpus_hand.length) {
         return false
       }
       return true;
