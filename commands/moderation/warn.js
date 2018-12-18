@@ -75,6 +75,17 @@ class warn extends Command {
         warning.case
     );
 
+    await discordmember.send(
+      "You have been warned on " +
+        msg.guild.name +
+        " by " +
+        msg.author.tag +
+        " for **" +
+        reason +
+        "**. Warning #" +
+        warning.case
+    );
+
     let warn = new MessageEmbed()
       .setColor(0xffb200)
       .setAuthor(discorduser.username, discorduser.avatarURL())
