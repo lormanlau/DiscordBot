@@ -59,8 +59,8 @@ class pay extends Command {
       bot.database.update(
         "users",
         {
-          balance: recipient.balance + paidAmount,
-          id: msg.mentions.users.first().id
+          balance: account.balance - amount,
+          id: msg.author.id
         },
         bot.logger
       );
@@ -68,8 +68,8 @@ class pay extends Command {
       bot.database.update(
         "users",
         {
-          balance: account.balance - amount,
-          id: msg.author.id
+          balance: recipient.balance + paidAmount,
+          id: msg.mentions.users.first().id
         },
         bot.logger
       );
