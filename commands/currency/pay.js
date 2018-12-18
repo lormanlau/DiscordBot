@@ -20,7 +20,7 @@ class pay extends Command {
       return msg.reply("please specify an amount to pay!");
     else if (args[1] && !isNaN(args[1])) amount = Number(args[1]);
 
-    if (amount >= 0) return msg.reply("you cannot pay a negative amount!");
+    if (amount <= 0) return msg.reply("you cannot pay a negative amount!");
 
     if (bot.config.Discord.ownerID == msg.author.id) {
       msg.channel.send(
@@ -53,19 +53,7 @@ class pay extends Command {
 
       let paidAmount = Math.floor(0.9 * amount);
 
-      let recipient =
-        (await bot.database.users.get(msg.mentions.users.first().id)) || {};
-
-      bot.database.update(
-        "users",
-        {
-          balance: recipient.balance + paidAmount,
-          id: msg.mentions.users.first().id
-        },
-        bot.logger
-      );
-
-      bot.database.update(
+      await bot.database.update(
         "users",
         {
           balance: account.balance - amount,
@@ -73,6 +61,29 @@ class pay extends Command {
         },
         bot.logger
       );
+
+      let recipient =
+        (await bot.database.users.get(msg.mentions.users.first().id)) || null;
+
+      if (recipient) {
+        await bot.database.update(
+          "users",
+          {
+            balance: recipient.balance + paidAmount,
+            id: msg.mentions.users.first().id
+          },
+          bot.logger
+        );
+      } else {
+        await bot.database.update(
+          "users",
+          {
+            balance: paidAmount,
+            id: msg.mentions.users.first().id
+          },
+          bot.logger
+        );
+      }
 
       msg.reply(
         "you have paid " +
