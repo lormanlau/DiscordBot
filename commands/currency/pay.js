@@ -53,10 +53,7 @@ class pay extends Command {
 
       let paidAmount = Math.floor(0.9 * amount);
 
-      let recipient =
-        (await bot.database.users.get(msg.mentions.users.first().id)) || {};
-
-      bot.database.update(
+      await bot.database.update(
         "users",
         {
           balance: account.balance - amount,
@@ -65,14 +62,28 @@ class pay extends Command {
         bot.logger
       );
 
-      bot.database.update(
-        "users",
-        {
-          balance: recipient.balance + paidAmount,
-          id: msg.mentions.users.first().id
-        },
-        bot.logger
-      );
+      let recipient =
+        (await bot.database.users.get(msg.mentions.users.first().id)) || null;
+
+      if (recipient) {
+        await bot.database.update(
+          "users",
+          {
+            balance: recipient.balance + paidAmount,
+            id: msg.mentions.users.first().id
+          },
+          bot.logger
+        );
+      } else {
+        await bot.database.update(
+          "users",
+          {
+            balance: paidAmount,
+            id: msg.mentions.users.first().id
+          },
+          bot.logger
+        );
+      }
 
       msg.reply(
         "you have paid " +
