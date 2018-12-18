@@ -83,7 +83,7 @@ class blackjack extends Command {
     var timeout = true;
     
     if (args[0] && isNaN(args[0])) amount = 10;
-    else if (args[0] && !isNaN(args[0])) amount = Number(args[0]);
+    else if (args[0] && args[1] > 0 && !isNaN(args[0])) amount = Number(args[0]);
     else amount = 10;
 
     let account = (await bot.database.users.get(msg.author.id)) || {};
