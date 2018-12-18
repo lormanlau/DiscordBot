@@ -6,7 +6,7 @@ class blackjack extends Command {
       name: "blackjack",
       description: "",
       usage: "blackjack <gamble-amount>",
-      aliases: [],
+      aliases: ["bj"],
       permLevel: 1
     });
   }
