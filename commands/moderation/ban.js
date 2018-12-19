@@ -6,50 +6,64 @@ class ban extends Command {
     super(client, {
       name: "ban",
       description: "Bans user(s) from a guild.",
-      usage: "ban",
+      usage: "ban <id or mention> <reason>",
       aliases: [],
       permLevel: 2
     });
   }
 
   async run(bot, msg, args, level) {
+    var guildmember;
     if (!msg.member.hasPermission("BAN_MEMBERS"))
-      return msg.reply(
-        "you do not have permission to do this! Required permission: BAN_MEMBERS"
-      );
-    if (!msg.mentions.users.first() || !msg.mentions.members.first())
-      return msg.reply("please mention someone to ban!");
-    if (!msg.mentions.members.first().bannable)
+      return msg.reply("you do not have permission to do this! Required permission: BAN_MEMBERS");
+    if (!args[1])
+      return msg.reply("please provide a reason")
+
+    if (!msg.mentions.users.first() || !msg.mentions.members.first()) {
+      if (isNaN(args[0]))
+        return msg.reply("please mention someone to ban!");
+      else if (!isNaN(args[0]))
+        guildmember = await msg.guild.member(args[0]);
+      else
+        return msg.reply("not a valid user");
+    } else 
+        guildmember = msg.mentions.members.first();
+
+    if (!guildmember)
+      return msg.reply("not a valid user id");
+
+    if (!guildmember.bannable)
       return msg.reply("I don't have permission to ban this user!");
+
     if (
-      msg.mentions.members.first().roles.highest.position >=
+      guildmember.roles.highest.position >=
       msg.member.roles.highest.position
     )
       return msg.reply("You cannot ban this user!");
 
     args.shift();
 
-    msg.mentions.members
-      .first()
+    guildmember
       .ban({ reason: args.join(" ") })
+      // .setMute(false, args.join(" ")) //for testing
       .then(member => {
         msg.reply(
           "**" +
-            msg.mentions.users.first().username +
+            guildmember.user.username +
             "** has been successfully banned."
         );
 
         var ban = new MessageEmbed()
           .setColor(0xffb200)
           .setAuthor(
-            msg.mentions.users.first().username,
-            msg.mentions.users.first().avatarURL()
+            guildmember.user.username,
+            guildmember.user.avatarURL()
           )
           .addField(
             "Member Banned",
-            `**:hammer: ${msg.mentions.users.first().username}#${
-              msg.mentions.users.first().discriminator
-            } (${msg.mentions.users.first().id}) was banned from the server.**`
+            `**:hammer: ${guildmember.user.username}#${
+              guildmember.user.discriminator
+            } (${guildmember.user.id}) was banned from the server.**`
           )
           .addField(
             "Responsible Moderator",
@@ -63,7 +77,7 @@ class ban extends Command {
           .addField("Reason", args.join(" "))
           .setFooter(
             `${msg.guild.name} | ${msg.guild.members.size} members`,
-            `${msg.guild.iconURL()}`
+            msg.guild.iconURL()
           )
           .setTimestamp();
 
