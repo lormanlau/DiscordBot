@@ -88,7 +88,7 @@ class coinflip extends Command {
           );
       }
     } else {
-      return msg.reply("please enter a heads or tails /cf <bet amount> <h or t>");
+      return msg.reply("please enter a heads or tails /cf <h or t> <bet amount>");
     }
     return msg.channel.send({embed: embed})
   }
