@@ -22,6 +22,9 @@ class pay extends Command {
 
     if (amount <= 0) return msg.reply("you cannot pay a negative amount!");
 
+    if (msg.mentions.users.first() == msg.author)
+      return msg.reply("why the fuck u tryna pay urself");
+
     if (bot.config.Discord.ownerID == msg.author.id) {
       msg.channel.send(
         "**[ADMIN OVERRIDE]** Added " +
