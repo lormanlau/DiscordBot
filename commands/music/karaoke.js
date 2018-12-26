@@ -48,7 +48,7 @@ class karaoke extends Command {
       )
         return msg.reply("you aren't in the Karaoke voice channel!");
 
-      bot.karaokeQueue.push(msg.author.id);
+      bot.karaokeQueue.push(msg.author);
       msg.reply(
         "you've been added to the queue at position " +
           bot.karaokeQueue.length +
@@ -56,7 +56,7 @@ class karaoke extends Command {
         {
           embed: {
             title: "Karaoke Queue",
-            description: "**Up Next:** " + bot.karaokeQueue.join(">\n<@"),
+            description: "**Up Next:** " + bot.karaokeQueue.join("\n"),
             color: msg.guild.me.displayColor
           }
         }
@@ -77,7 +77,7 @@ class karaoke extends Command {
           {
             embed: {
               title: "Karaoke Queue",
-              description: "**Up Next:** " + bot.karaokeQueue.join(">\n<@"),
+              description: "**Up Next:** " + bot.karaokeQueue.join("\n"),
               color: msg.guild.me.displayColor
             }
           }
@@ -109,7 +109,7 @@ class karaoke extends Command {
           {
             embed: {
               title: "Karaoke Queue",
-              description: "**Up Next:** " + bot.karaokeQueue.join(">\n<@"),
+              description: "**Up Next:** " + bot.karaokeQueue.join("\n"),
               color: msg.guild.me.displayColor
             }
           }
