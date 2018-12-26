@@ -18,7 +18,7 @@ class karaoke extends Command {
     if (option == "open") {
       if (!msg.member.hasPermission("MANAGE_MESSAGES")) return;
       if (bot.karaokeInProgress)
-        return msg.reply("a karaoke party is already in progress!");
+        return msg.reply("a karaoke event is already in progress!");
 
       bot.karaokeInProgress = true;
       bot.karaokeIsOpen = true;
@@ -66,15 +66,7 @@ class karaoke extends Command {
       if (bot.karaokeQueue.length == 0)
         msg.reply("there aren't enough people in queue to begin!");
 
-      let channel = msg.guild.channels.get("517095011225960458");
       bot.karaokePerformer = bot.karaokeQueue.shift();
-      channel.members.forEach(async mem => {
-        if (mem.user.id == bot.karaokePerformer || mem == bot.karaokeHost) {
-          mem.setMute(false);
-        } else {
-          mem.setMute(true);
-        }
-      });
 
       bot.channels
         .get("518940742194954291")
@@ -103,16 +95,8 @@ class karaoke extends Command {
       if (bot.karaokeQueue.length == 0)
         return msg.reply("there isn't anyone left in queue :(");
 
-      let channel = msg.guild.channels.get("517095011225960458");
       bot.lastPerformer = bot.karaokePerformer;
       bot.karaokePerformer = bot.karaokeQueue.shift();
-      channel.members.forEach(async mem => {
-        if (mem.user.id == bot.karaokePerformer || mem == bot.karaokeHost) {
-          await mem.setMute(false);
-        } else {
-          await mem.setMute(true);
-        }
-      });
 
       bot.channels
         .get("518940742194954291")
@@ -136,10 +120,7 @@ class karaoke extends Command {
         .send(
           "Thanks for coming out to another great karaoke event! This one is now over, see you next time!"
         );
-      let channel = msg.guild.channels.get("517095011225960458");
-      channel.members.forEach(mem => {
-        mem.setMute(false);
-      });
+
       bot.karaokeInProgress = null;
       bot.karaokeIsOpen = null;
       bot.karaokeQueue = null;
