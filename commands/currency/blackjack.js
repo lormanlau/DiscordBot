@@ -23,16 +23,6 @@ class blackjack extends Command {
   }
 
   calculateTotal(hand) {
-    function countAces(hand){
-      var numberOfAces = 0;
-      for (let i = 0; i < hand.length; i++){
-        if (hand[i] == "A") {
-          numberOfAces++;
-        }
-      }
-      return numberOfAces;
-    }
-
     let total = 0;
     for (var i = 0; i < hand.length; i++){
       if (hand[i] == "J" || hand[i] == "Q" || hand[i] == "K") {
@@ -44,11 +34,9 @@ class blackjack extends Command {
       }
     }
     
-    for (var i = 0; i < countAces(hand); i++){
-      if (total > 21) {
-        total -= 10;
-      } else {
-        break;
+    for (var i = 0; i < hand.length; i++){
+      if (hand[i] == "A" && total > 21) {
+        total -= 10
       }
     }
     return total;
@@ -83,7 +71,7 @@ class blackjack extends Command {
     var timeout = true;
     
     if (args[0] && isNaN(args[0])) amount = 10;
-    else if (args[0] && !isNaN(args[0])) amount = Number(args[0]);
+    else if (args[0] && args[1] > 0 && !isNaN(args[0])) amount = Number(args[0]);
     else amount = 10;
 
     let account = (await bot.database.users.get(msg.author.id)) || {};

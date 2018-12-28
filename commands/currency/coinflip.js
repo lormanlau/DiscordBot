@@ -18,7 +18,7 @@ class coinflip extends Command {
     if (!args[0]) return msg.reply("please enter a heads or tails /cf <h or t> <bet amount> ");
 
     if (args[1] && isNaN(args[1])) amount = 10;
-    else if (args[1] && !isNaN(args[1])) amount = Number(args[1]);
+    else if (args[1] && args[1] > 0 && !isNaN(args[1])) amount = Number(args[1]);
     else amount = 10;
 
     let account = (await bot.database.users.get(msg.author.id)) || {};
@@ -88,7 +88,7 @@ class coinflip extends Command {
           );
       }
     } else {
-      return msg.reply("please enter a heads or tails /cf <bet amount> <h or t>");
+      return msg.reply("please enter a heads or tails /cf <h or t> <bet amount>");
     }
     return msg.channel.send({embed: embed})
   }

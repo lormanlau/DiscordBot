@@ -1,12 +1,12 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 const { MessageEmbed } = require("discord.js");
 
-class ban extends Command {
+class hackban extends Command {
   constructor(client) {
     super(client, {
-      name: "ban",
+      name: "hackban",
       description: "Bans user(s) from a guild.",
-      usage: "ban <id or mention> <reason>",
+      usage: "hackban <id> <reason>",
       aliases: [],
       permLevel: 2
     });
@@ -19,51 +19,39 @@ class ban extends Command {
     if (!args[1])
       return msg.reply("please provide a reason")
 
-    if (!msg.mentions.users.first() || !msg.mentions.members.first()) {
-      if (isNaN(args[0]))
-        return msg.reply("please mention someone to ban!");
-      else if (!isNaN(args[0]))
-        guildmember = await msg.guild.member(args[0]);
-      else
-        return msg.reply("not a valid user");
-    } else 
-        guildmember = msg.mentions.members.first();
+    if (!isNaN(args[0])){
+      guildmember = await bot.users.fetch(args[0], true)
+        .catch(error => {
+          return null
+        });
+    } else
+      return msg.reply("please enter a valid user id");
 
     if (!guildmember)
       return msg.reply("not a valid user id");
 
-    if (!guildmember.bannable)
-      return msg.reply("I don't have permission to ban this user!");
-
-    if (
-      guildmember.roles.highest.position >=
-      msg.member.roles.highest.position
-    )
-      return msg.reply("You cannot ban this user!");
-
     args.shift();
 
-    guildmember
-      .ban({ reason: args.join(" ") })
-      // .setMute(false, args.join(" ")) //for testing
+    msg.guild.members
+      .ban(guildmember, { reason: args.join(" ") })
       .then(member => {
         msg.reply(
           "**" +
-            guildmember.user.username +
+            guildmember.username +
             "** has been successfully banned."
         );
 
         var ban = new MessageEmbed()
           .setColor(0xffb200)
           .setAuthor(
-            guildmember.user.username,
-            guildmember.user.avatarURL()
+            guildmember.username,
+            guildmember.avatarURL()
           )
           .addField(
             "Member Banned",
-            `**:hammer: ${guildmember.user.username}#${
-              guildmember.user.discriminator
-            } (${guildmember.user.id}) was banned from the server.**`
+            `**:hammer: ${guildmember.username}#${
+              guildmember.discriminator
+            } (${guildmember.id}) was banned from the server.**`
           )
           .addField(
             "Responsible Moderator",
@@ -93,4 +81,4 @@ class ban extends Command {
   }
 }
 
-module.exports = ban;
+module.exports = hackban;
