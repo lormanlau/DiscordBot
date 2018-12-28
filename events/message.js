@@ -27,7 +27,7 @@ module.exports = class {
           f.addField("Attachment", attachment.url);
         });
       }
-      modmail.send("@here <@&517262424613715980>", {
+      modmail.send("@here", {
         embed: f
       });
     }
