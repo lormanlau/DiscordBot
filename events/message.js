@@ -17,7 +17,7 @@ module.exports = class {
           msg.author.username + " (" + msg.author.id + ")",
           msg.author.avatarURL()
         )
-        .addField("Mod Mail Recieved!", msg.content | "No Content...")
+        .addField("Mod Mail Recieved!", msg.content || "No Content...")
         .setFooter(bot.user.username, `${bot.user.avatarURL()}`)
         .setTimestamp();
       if (msg.attachments.first()) {
