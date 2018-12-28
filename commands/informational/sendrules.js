@@ -52,17 +52,9 @@ If you have any concerns with these rules, please send modmail or post in #feedb
 
 <@337457236924432385> : Hi I'm Yang and I am an unpaid janitor who pings people, my favorite emojis are :uwu: and :pingsock:. I live in NY and I enjoy drinking soju until I pass out on a ktown curb
 
-<@261008803917463555> : hi
-
 <@194286799302950912> : eileen
 
-<@86261500469055488> : Hey everyone, Shaq here.
-
 **Our Head Moderators:**
-
-<@163226606419181568> : Hi, I'm Anthony. I like playing video games (LoL/Tetris), listening to kpop, and watching anime (but I'm not a weeb!!). Studying actuarial studies and I'm from Australia!
-
-<@178786505500786688> : I’m disco, please send me if people are acting sleazy, or if you want to vent at someone, I’m always here to listen.
 
 <@135945315499900928> : Hi, I'm Marx, no not after Karl. 22 and living in Scotland. I travel a bit. Like like a lot of things and pretty open so I'm down for most convos
 
@@ -84,20 +76,12 @@ Message me if you have any problems with someone or just need to talk (vent)
 
 <@203715834995015689> : Hihi, I’m Karen! Probably your most innocent staff. Come talk to me because I’m always willing to make friends, plus I’m friendly. :sparkling_heart:
 
-<@278094426784661505> : hello, this is big dumb energy and i live in korea ツ
-
 <@152159448473927680> : Hi I like to sing come join us in karaoke VC
 
 <@312003177220407296> : kookie
 
-<@163796113168531457>: I’m wuyang, I’m from the Texas DFW area. I enjoy reading, recording music, and checking out new games on steam. I’m currently working in enterprise technology sales. My bias is Jisoo Kim.
-
 <@208000915712638978> : hi im trap
 
-*Retired Moderators (RIP):*
-
-- Michelle
-- Goorace
 ~~
 ~~`);
 

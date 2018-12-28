@@ -13,6 +13,12 @@ class user extends Command {
 
   async run(bot, msg, args, level) {
     const { MessageEmbed } = require("discord.js");
+    let presences = {
+      WATCHING: "Watching",
+      PLAYING: "Playing",
+      LISTENING: "Listening to",
+      STREAMING: "Streaming"
+    };
 
     var member = msg.member;
     if (msg.mentions.users.array()[0]) {
@@ -21,15 +27,8 @@ class user extends Command {
     var user = member.user;
     var roles = member.roles.size;
 
-    if (user.presence.game) {
-      var game = user.presence.game.name;
-    } else {
-      game = "None";
-    }
-
     var info = new MessageEmbed()
       .setAuthor(user.username + "#" + user.discriminator, user.avatarURL())
-      .setDescription("User Information")
       .setColor(member.displayHexColor)
       .setFooter("Triggered by " + msg.author.username, msg.author.avatarURL())
       .setTimestamp()
@@ -40,6 +39,22 @@ class user extends Command {
       .addField("Account Created", new Date(user.createdAt), true)
       .addField("Join Date", new Date(member.joinedAt), true)
       .addField("Bot", user.bot, true);
+
+    if (user.presence.activity) {
+      info.setDescription(
+        presences[user.presence.activity.type] +
+          " " +
+          user.presence.activity.name +
+          (user.presence.activity.details
+            ? " (" +
+              user.presence.activity.details +
+              (user.presence.activity.type == "LISTENING"
+                ? " by " + user.presence.activity.state
+                : "") +
+              ")"
+            : "")
+      );
+    }
 
     if (user.presence.status === "offline") {
       info.addField("Status", "<:offline:313956277237710868> Offline", true);
@@ -62,7 +77,6 @@ class user extends Command {
       colorR = "None";
     }
     info
-      .addField("Game", game, true)
       .addField("Roles", roles, true)
       .addField("Color", member.displayHexColor, true)
       .addField("Highest Role", member.roles.highest.name, true)
