@@ -17,15 +17,19 @@ module.exports = class {
           msg.author.username + " (" + msg.author.id + ")",
           msg.author.avatarURL()
         )
-        .addField("Mod Mail Recieved!", msg.content)
+        .addField("Mod Mail Recieved!", msg.content | "No Content...")
         .setFooter(bot.user.username, `${bot.user.avatarURL()}`)
         .setTimestamp();
-      modmail.send(
-        "<@&516544387048669214> <@&517262424613715980> <@&516549422549827594>",
-        {
-          embed: f
-        }
-      );
+      if (msg.attachments.first()) {
+        if (msg.attachments.first().height)
+          f.setImage(msg.attachments.first().url);
+        msg.attachments.forEach(attachment => {
+          f.addField("Attachment", attachment.url);
+        });
+      }
+      modmail.send("@here <@&517262424613715980>", {
+        embed: f
+      });
     }
     if (!msg.guild && msg.channel.type == "dm") {
       bot.logger.log(
