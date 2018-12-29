@@ -39,6 +39,9 @@ class Database {
       this.reactions = this.r.db("asianbot").table("reactions");
       logger.debug("Reaction Roles Synchronized.");
 
+      this.giveaways = this.r.db("asianbot").table("giveaways");
+      logger.debug("Giveaways Synchronized.");
+
       this.ready = true;
     };
 
