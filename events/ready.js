@@ -49,7 +49,7 @@ module.exports = class {
           });
       }
 
-      // bot.birthdays = schedule.scheduleJob("* * 1 * *", birthdays());
+      bot.birthdays = schedule.scheduleJob("* * 1 * *", birthdays());
     }, 1000);
 
     var giveaways = await bot.database.giveaways.filter({winner_object: []})
