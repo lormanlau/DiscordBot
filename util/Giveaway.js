@@ -20,6 +20,8 @@ class Giveaway {
     }
     if (winners.length < numberOfWinners)
       description += "\nNot enough entries";
+    if (winners.length <= 0)
+      this.giveaway.winner_object = ["No winners"];
     return description;
   }
 
@@ -28,7 +30,7 @@ class Giveaway {
       var messageReaction = this.message.reactions.filter( messageReaction => messageReaction.emoji.name == this.emoji ).first();
       var reactionUserStore = await messageReaction.users.fetch()
       var winners = this.pickWinners(reactionUserStore, this.giveaway.winners);
-      this.giveaway.winner_object = winners
+      this.giveaway.winner_object = winners;
       this.message.edit({embed: 
         {
           title: this.giveaway.prize,

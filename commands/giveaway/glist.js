@@ -12,9 +12,8 @@ class glist extends Command {
   }
 
   async run(bot, msg, args, level) {
-    let dbGList = await bot.database.giveaways.filter({winner_object: []});
+    let dbGList = await bot.database.giveaways.filter({winner_object: [], guildID: msg.guild.id});
     if (dbGList.length > 0) {
-      console.log(dbGList)
       msg.reply(`There are current ${dbGList.length} giveaways active.`);
     } else {
       msg.reply("Currently no Giveaways active.");
