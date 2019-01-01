@@ -89,10 +89,9 @@ module.exports = class {
     var giveaways = await bot.database.giveaways.filter({ winner_object: [] });
     for (var i = 0; i < giveaways.length; i++) {
       let giveaway = giveaways[i];
-      let message = await bot.guilds
-        .get(giveaways[i].guildID)
-        .channels.get(giveaways[i].channelID)
-        .messages.fetch(giveaways[i].id);
+      let message = await bot.guilds.get(giveaways[i].guildID)
+      .channels.get(giveaways[i].channelID)
+      .messages.fetch(giveaways[i].id);
 
       new Giveaway(bot, message, giveaway).run();
     }

@@ -69,7 +69,6 @@ class gcreate extends Command {
     var gmessage = await msg.channel.send({embed: embed});
     gmessage.react(this.emoji);
     giveaway.id = gmessage.id;
-    console.log(giveaway)
 
     bot.database.update(
       "giveaways",
