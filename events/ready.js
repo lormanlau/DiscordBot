@@ -1,4 +1,4 @@
-const Giveaway = require(`${process.cwd()}/util/Giveaway.js`)
+const Giveaway = require(`${process.cwd()}/util/Giveaway.js`);
 
 module.exports = class {
   constructor(bot) {
@@ -6,8 +6,6 @@ module.exports = class {
   }
 
   async run(bot) {
-    let schedule = require("node-schedule");
-
     setTimeout(function() {
       bot.logger.ready(
         bot.user.username +
@@ -82,18 +80,20 @@ module.exports = class {
           });
       }
 
-      bot.birthdays = schedule.scheduleJob("* * 1 * *", birthdays());
+      birthdays();
+      setInterval(birthdays(), 1000 * 60 * 60 * 24);
     }, 1000);
 
-    var giveaways = await bot.database.giveaways.filter({winner_object: []})
+    var giveaways = await bot.database.giveaways.filter({ winner_object: [] });
     for (var i = 0; i < giveaways.length; i++) {
       let giveaway = giveaways[i];
-      let message = await bot.guilds.get(giveaways[i].guildID)
-      .channels.get(giveaways[i].channelID)
-      .messages.fetch(giveaways[i].id);
+      let message = await bot.guilds
+        .get(giveaways[i].guildID)
+        .channels.get(giveaways[i].channelID)
+        .messages.fetch(giveaways[i].id);
 
       new Giveaway(bot, message, giveaway).run();
     }
-    bot.logger.debug("successfully restarted giveaways")
+    bot.logger.debug("successfully restarted giveaways");
   }
 };
