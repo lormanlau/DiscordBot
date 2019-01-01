@@ -111,13 +111,13 @@ class addreaction extends Command {
           let stuff = res ? res[msg.channel.id] : null;
 
           if (stuff) {
-            if (stuff[msg.id]) {
-              stuff[msg.id].push({
+            if (stuff[msg_id]) {
+              stuff[msg_id].push({
                 role: role_id,
                 emoji: emoji_id
               });
             } else {
-              stuff[msg.id] = [
+              stuff[msg_id] = [
                 {
                   role: role_id,
                   emoji: emoji_id
