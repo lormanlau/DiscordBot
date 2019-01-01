@@ -11,8 +11,8 @@ class Database {
       this.r = require("rethinkdbdash")({
         port: 28015,
         host: ip,
-        user: username,
-        password: password,
+        // user: username,
+        // password: password,
         silent: true
       });
 

@@ -58,7 +58,6 @@ module.exports = class {
       let message = await bot.guilds.get(giveaways[i].guildID)
       .channels.get(giveaways[i].channelID)
       .messages.fetch(giveaways[i].id);
-
       new Giveaway(bot, message, giveaway).run();
     }
     bot.logger.debug("successfully restarted giveaways")
