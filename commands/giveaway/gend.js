@@ -21,6 +21,9 @@ class gend extends Command {
           return msg.reply(`successfully ended ${args[0]} giveaway`);
         }
       }
+      return msg.reply(`message ID not found`);
+    } else if (args[0]) {
+      return msg.reply(`Invalid syntax`);
     } else {
       var giveaway = currentGiveaways[currentGiveaways.length - 1];
       clearTimeout(giveaway.timer);

@@ -22,6 +22,8 @@ class greroll extends Command {
         .messages.fetch(giveaway[0].id);
       msg.channel.send(`Rerolling messageID: ${message.id} giveaway`)
       new Giveaway(bot, message, giveaway[0]).reroll();
+    } else if (args[0]) {
+      return msg.reply(`Invalid syntax`);
     } else {
       var giveaway = await bot.database.giveaways.filter({guildID: msg.guild.id}).orderBy(bot.database.r.desc("endTime")).limit(1);
       var message = await msg.guild
