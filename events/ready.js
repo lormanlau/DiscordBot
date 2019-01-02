@@ -81,7 +81,7 @@ module.exports = class {
       }
 
       birthdays();
-      setInterval( birthdays, 1000 * 60 * 60 * 24);
+      setInterval(birthdays, 1000 * 60 * 60 * 24);
     }, 1000);
 
     var giveaways = await bot.database.giveaways.filter({ winner_object: [] });
