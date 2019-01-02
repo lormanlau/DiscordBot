@@ -5,7 +5,7 @@ class greroll extends Command {
   constructor(client) {
     super(client, {
       name: "greroll",
-      description: "rerolls winners for an ended give away",
+      description: "rerolls winners for an ended giveaway",
       usage: "greroll <[messageID]>",
       aliases: [],
       permLevel: 2
