@@ -35,7 +35,7 @@
     "url": "^0.11.0"
   },
   "devDependencies": {
-    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-prettier": "^3.0.1",
     "prettier": "^1.14.2"
   }
 }
