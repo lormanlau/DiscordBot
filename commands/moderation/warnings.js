@@ -48,7 +48,7 @@ class warnings extends Command {
       let warning = current_warns[i];
       warn.addField(
         `Case: ${warning.case} | Issued By: ${bot.users.get(warning.moderator).username}`,
-        `Reason: ${warning.reason} | Issued At: ${warning.timestamp.toLocaleString('en-US')}`
+        `Reason: ${warning.reason} | Issued At: ${warning.timestamp.toUTCString()}`
         );
     }
     return msg.channel.send({ embed: warn });

@@ -31,7 +31,7 @@ class server extends Command {
       .setThumbnail(msg.guild.iconURL())
       .setTimestamp()
       .addField("Name", msg.guild.name, true)
-      .addField("Created", msg.guild.createdAt.toLocaleString(), true)
+      .addField("Created", msg.guild.createdAt.toUTCString(), true)
       .addField("ID", msg.guild.id, true)
       .addField("Owner", msg.guild.owner.user.username, true)
       .addField("Region", msg.guild.region, true)

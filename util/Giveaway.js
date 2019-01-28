@@ -86,7 +86,7 @@ class Giveaway {
           title: this.giveaway.prize,
           description: `React with ${this.emoji} to enter!\nTime remaining: ${(Math.floor(timeleft/timeDivider) != 0)? "**" + Math.floor(timeleft/timeDivider) + "**" : ""} ${timeUnit}`,
           footer: {
-            text: `${this.giveaway.winners} winner(s) | EndedAt: ${this.giveaway.endTime.toLocaleString('en-US')}`,
+            text: `${this.giveaway.winners} winner(s) | EndedAt: ${this.giveaway.endTime.toUTCString()}`,
             iconURL: this.message.guild.iconURL()
           }
         }
@@ -105,9 +105,9 @@ class Giveaway {
     this.message.edit({embed: 
       {
         title: this.giveaway.prize,
-        description: this.createDescription(this.giveaway.winner_object, this.giveaway.winners) + `\nRerolled winners at: ${new Date().toLocaleString('en-US')}`,
+        description: this.createDescription(this.giveaway.winner_object, this.giveaway.winners) + `\nRerolled winners at: ${new Date().toUTCString()}`,
         footer: {
-          text: `${this.giveaway.winners} winner(s) | EndedAt: ${this.giveaway.endTime.toLocaleString('en-US')}`,
+          text: `${this.giveaway.winners} winner(s) | EndedAt: ${this.giveaway.endTime.toUTCString()}`,
           iconURL: this.message.guild.iconURL()
         }
       }
@@ -131,7 +131,7 @@ class Giveaway {
         title: this.giveaway.prize,
         description: this.createDescription(this.giveaway.winner_object, this.giveaway.winners),
         footer: {
-          text: `${this.giveaway.winners} winner(s) | EndedAt: ${new Date().toLocaleString('en-US')}`,
+          text: `${this.giveaway.winners} winner(s) | EndedAt: ${new Date().toUTCString()}`,
           iconURL: this.message.guild.iconURL()
         }
       }

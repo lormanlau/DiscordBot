@@ -36,6 +36,9 @@ class gcreate extends Command {
   }
 
   async run(bot, msg, args, level) {
+    if (!args[0]) {
+      return msg.reply("invalid syntax");
+    }
     var giveaway = {
       startTime: new Date(),
       endTime: new Date(),
@@ -48,10 +51,10 @@ class gcreate extends Command {
     }
     var time = this.parseTime(args[0]);
     if (time ==  -1) {
-      return msg.reply("invalid syntax")
+      return msg.reply("invalid syntax");
     }
     if (isNaN(args[1]) || args[1] < 1) {
-      return msg.reply("invalid syntax")
+      return msg.reply("invalid syntax");
     }
     giveaway.endTime = time;
     giveaway.winners = args[1];
@@ -60,10 +63,9 @@ class gcreate extends Command {
     giveaway.prize = args.join(" ");
     var embed = new MessageEmbed();
     embed.setTitle(giveaway.prize)
-
     .setDescription(`React with ${this.emoji} to enter!`)
     .setFooter(
-            `${giveaway.winners} winner(s) | endsAt: ${time.toLocaleString('en-US')}`,
+            `${giveaway.winners} winner(s) | EndsAt: ${time.toUTCString()}`,
             msg.guild.iconURL()
           )
     var gmessage = await msg.channel.send({embed: embed});
