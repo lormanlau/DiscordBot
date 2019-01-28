@@ -32,7 +32,7 @@ class glist extends Command {
 
   async run(bot, msg, args, level) {
     var activeGiveaways = msg.guild.giveaways;
-    if (!activeGiveaways)
+    if (!activeGiveaways || activeGiveaways.length == 0)
       return msg.channel.send("Currently No active Giveaways. :(")
     for (var i = 0; i < activeGiveaways.length; i++) {
       var channel = msg.guild.channels.filter(channel => channel.id == activeGiveaways[i].giveaway.channelID).first()
