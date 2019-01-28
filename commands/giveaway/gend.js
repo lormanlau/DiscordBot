@@ -13,10 +13,13 @@ class gend extends Command {
 
   async run(bot, msg, args, level) {
     var currentGiveaways = (msg.guild.giveaways) ? msg.guild.giveaways : [];
+    if (currentGiveaways.length == 0)
+      return msg.reply(`message ID not found`);
     if (args[0] && !isNaN(args[0])) {
-      for (var i = 0; i < currentGiveaways; i++) {
+      for (var i = 0; i < currentGiveaways.length; i++) {
         if (currentGiveaways[i].giveaway.id == args[0]){
           clearTimeout(currentGiveaways[i].timer);
+          clearTimeout(currentGiveaways[i].updateTimeTimer);
           currentGiveaways[i].finishGiveaway();
           return msg.reply(`successfully ended ${args[0]} giveaway`);
         }

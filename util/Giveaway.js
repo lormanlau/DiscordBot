@@ -5,6 +5,7 @@ class Giveaway {
     this.giveaway = giveaway;
     this.emoji = "🎁";
     this.timer;
+    this.updateTimeTimer;
   }
 
   pickWinners(users, numberOfWinners){
@@ -48,10 +49,50 @@ class Giveaway {
   removeGiveawayFromGuild(){
     let currentGiveaways = this.message.guild.giveaways
     for (var i = 0; i < currentGiveaways.length; i++) {
-      if (currentGiveaways[i].id == this.giveaway.id) {
+      if (currentGiveaways[i].giveaway.id == this.giveaway.id) {
         this.message.guild.giveaways.splice(i, 1);
         return;
       }
+    }
+  }
+
+  updateTimeLeft(){
+    let timeleft = this.giveaway.endTime - new Date();
+    let dayInMill = 24 * 60 * 60 * 1000;
+    let hourInMill = 60 * 60 * 1000;
+    let minInMill = 60 * 1000;
+    let timeUnit;
+    let timeDivider;
+    let updateTime;
+    if (timeleft > dayInMill) {
+      timeUnit = "Days";
+      timeDivider = dayInMill;
+      updateTime = timeleft % dayInMill;
+    } else if (timeleft > hourInMill) {
+      timeUnit = "Hours";
+      timeDivider = hourInMill;
+      updateTime = timeleft % hourInMill;
+    } else if (timeleft > minInMill){
+      timeUnit = "Minutes";
+      timeDivider = minInMill;
+      updateTime = timeleft % minInMill;
+    } else {
+      timeUnit = "Less than a minute"
+      timeDivider = minInMill
+    }
+    this.message.edit(
+      {embed: 
+        {
+          title: this.giveaway.prize,
+          description: `React with ${this.emoji} to enter!\nTime remaining: ${(Math.floor(timeleft/timeDivider) != 0)? "**" + Math.floor(timeleft/timeDivider) + "**" : ""} ${timeUnit}`,
+          footer: {
+            text: `${this.giveaway.winners} winner(s) | EndedAt: ${this.giveaway.endTime.toLocaleString('en-US')}`,
+            iconURL: this.message.guild.iconURL()
+          }
+        }
+      })
+    if (updateTime) {
+      this.updateTimeTimer = setTimeout(this.updateTimeLeft.bind(this), updateTime);
     }
   }
 
@@ -108,8 +149,8 @@ class Giveaway {
   }
 
   async run(){
-    this.timer = setTimeout(this.finishGiveaway.bind(this),
-    this.giveaway.endTime - new Date());
+    this.timer = setTimeout(this.finishGiveaway.bind(this), this.giveaway.endTime - new Date());
+    this.updateTimeLeft()
     this.addGiveawayToGuild()
   }
 }
