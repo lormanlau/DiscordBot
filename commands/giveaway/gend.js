@@ -18,7 +18,6 @@ class gend extends Command {
     if (args[0] && !isNaN(args[0])) {
       for (var i = 0; i < currentGiveaways.length; i++) {
         if (currentGiveaways[i].giveaway.id == args[0]){
-          clearTimeout(currentGiveaways[i].timer);
           clearTimeout(currentGiveaways[i].updateTimeTimer);
           currentGiveaways[i].finishGiveaway();
           return msg.reply(`successfully ended ${args[0]} giveaway`);
@@ -29,7 +28,7 @@ class gend extends Command {
       return msg.reply(`Invalid syntax`);
     } else {
       var giveaway = currentGiveaways[currentGiveaways.length - 1];
-      clearTimeout(giveaway.timer);
+      clearTimeout(giveaway.updateTimeTimer);
       giveaway.finishGiveaway();
       return msg.reply(`successfully ended ${giveaway.giveaway.id} giveaway`);
     }

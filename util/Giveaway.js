@@ -4,7 +4,6 @@ class Giveaway {
     this.message = message;
     this.giveaway = giveaway;
     this.emoji = "🎁";
-    this.timer;
     this.updateTimeTimer;
   }
 
@@ -42,7 +41,13 @@ class Giveaway {
     if (!this.message.guild.giveaways) {
       this.message.guild.giveaways = [this]
     } else {
-      this.message.guild.giveaways.push(this)
+      let found = false;
+      for (var i = 0; i < this.message.guild.giveaways.length; i++){
+        if (this.message.guild.giveaways[i].giveaway.id == this.giveaway.id)
+          found = true;
+      }
+      if (!found)
+        this.message.guild.giveaways.push(this)
     }
   }
 
@@ -93,6 +98,8 @@ class Giveaway {
       })
     if (updateTime) {
       this.updateTimeTimer = setTimeout(this.updateTimeLeft.bind(this), updateTime);
+    } else {
+      this.updateTimeTimer = setTimeout(this.finishGiveaway.bind(this), timeleft);
     }
   }
 
@@ -136,20 +143,16 @@ class Giveaway {
         }
       }
     });
-
     this.sendGiveawayMessage();
-
     this.bot.database.update(
       "giveaways",
       this.giveaway ,
       this.bot.logger
     );
-
     this.removeGiveawayFromGuild();
   }
 
   async run(){
-    this.timer = setTimeout(this.finishGiveaway.bind(this), this.giveaway.endTime - new Date());
     this.updateTimeLeft()
     this.addGiveawayToGuild()
   }
