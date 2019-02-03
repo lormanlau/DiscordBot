@@ -16,10 +16,6 @@ class mute extends Command {
       return msg.reply(
         "you do not have permission to do this! Required permission: MANAGE_MESSAGES"
       );
-    if (!msg.guild.me.hasPermission("MANAGE_ROLES_OR_PERMISSIONS"))
-      return msg.reply(
-        "I do not have permission to do this! Required permission: MANAGE_ROLES_OR_PERMISSIONS"
-      );
     var { MessageEmbed } = require("discord.js");
     var mutee = msg.mentions.users.array();
 
