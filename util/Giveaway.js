@@ -62,6 +62,9 @@ class Giveaway {
   }
 
   updateTimeLeft(){
+    if (this.updateTimeTimer) {
+      clearTimeout(this.updateTimeTimer)
+    }
     let timeleft = this.giveaway.endTime - new Date();
     let dayInMill = 24 * 60 * 60 * 1000;
     let hourInMill = 60 * 60 * 1000;
@@ -128,6 +131,10 @@ class Giveaway {
   }
 
   async finishGiveaway(){
+    if (!this.giveaway.winners) {
+      console.log("winners have already been picked")
+      return
+    }
     var messageReaction = this.message.reactions.filter( messageReaction => messageReaction.emoji.name == this.emoji ).first();
     var reactionUserStore = await messageReaction.users.fetch();
     var winners = this.pickWinners(reactionUserStore, this.giveaway.winners);
